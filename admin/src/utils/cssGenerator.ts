@@ -260,7 +260,9 @@ export function generateSectionCSS(section: Section): string {
         pushDecl(val as ResponsiveString, cssProp, typoBase, typoTablet, typoDesktop);
       }
     }
-    const childSel = `${selector} p,\n${selector} span,\n${selector} div,\n${selector} a,\n${selector} li,\n${selector} h1,\n${selector} h2,\n${selector} h3,\n${selector} h4,\n${selector} h5,\n${selector} h6`;
+    // Scope to .npb-section-item__content so builder labels/controls are not affected
+    const scope = `${selector} .npb-section-item__content`;
+    const childSel = `${scope} p,\n${scope} span,\n${scope} div,\n${scope} a,\n${scope} li,\n${scope} h1,\n${scope} h2,\n${scope} h3,\n${scope} h4,\n${scope} h5,\n${scope} h6`;
     if (typoBase.length > 0) parts.push(`${childSel} {\n${typoBase.join('\n')}\n}`);
     if (typoTablet.length > 0) parts.push(`@media (min-width: ${TABLET_MIN}px) {\n  ${childSel} {\n  ${typoTablet.join('\n  ')}\n  }\n}`);
     if (typoDesktop.length > 0) parts.push(`@media (min-width: ${DESKTOP_MIN}px) {\n  ${childSel} {\n  ${typoDesktop.join('\n  ')}\n  }\n}`);
@@ -474,7 +476,9 @@ export function generateBuilderCSS(section: Section, bp: Breakpoint): string {
       }
     }
     if (typoDecls.length > 0) {
-      parts.push(`${selector} p,\n${selector} span,\n${selector} div,\n${selector} a,\n${selector} li,\n${selector} h1,\n${selector} h2,\n${selector} h3,\n${selector} h4,\n${selector} h5,\n${selector} h6 {\n${typoDecls.join('\n')}\n}`);
+      // Scope to .npb-section-item__content so builder labels/controls are not affected
+      const scope = `${selector} .npb-section-item__content`;
+      parts.push(`${scope} p,\n${scope} span,\n${scope} div,\n${scope} a,\n${scope} li,\n${scope} h1,\n${scope} h2,\n${scope} h3,\n${scope} h4,\n${scope} h5,\n${scope} h6 {\n${typoDecls.join('\n')}\n}`);
     }
   }
 
