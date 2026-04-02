@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from '@wordpress/element';
 import { PageBuilder } from './builder/PageBuilder';
 import { apiGet, apiPost, apiPut, apiDelete } from './api/useApi';
+import { SchemaBuilder } from './components/SchemaBuilder';
 
 /**
  * Page type as returned by the list API.
@@ -465,6 +466,7 @@ function ComponentsPage() {
   const [newSlug, setNewSlug] = useState('');
   const [newCategory, setNewCategory] = useState('basic');
   const [newDesc, setNewDesc] = useState('');
+  const [newSchema, setNewSchema] = useState('{"fields":[]}');
   const [creating, setCreating] = useState(false);
   const [confirmDialog, setConfirmDialog] = useState<ConfirmDialogState>({
     open: false, title: '', message: '', confirmLabel: 'Confirm', confirmColor: '#ef4444', onConfirm: null,
@@ -557,15 +559,17 @@ function ComponentsPage() {
     if (!newName.trim() || !newSlug.trim()) return;
     setCreating(true);
     try {
+      let parsedSchema;
+      try { parsedSchema = JSON.parse(newSchema); } catch { parsedSchema = { fields: [] }; }
       await apiPost('/components', {
         name: newName.trim(),
         slug: newSlug.trim(),
         category: newCategory,
         description: newDesc,
-        content_schema: { fields: [] },
+        content_schema: parsedSchema,
       });
       setShowCreate(false);
-      setNewName(''); setNewSlug(''); setNewDesc('');
+      setNewName(''); setNewSlug(''); setNewDesc(''); setNewSchema('{"fields":[]}');
       fetchComponents();
     } catch (err: unknown) {
       alert(err instanceof Error ? err.message : 'Failed to create');
@@ -665,6 +669,13 @@ function ComponentsPage() {
               <input type="text" value={newDesc} onChange={(e) => setNewDesc(e.target.value)}
                 placeholder="Short description" style={{ width: '100%', padding: '8px 12px', border: '1px solid #d1d5db', borderRadius: 6, fontSize: 14, boxSizing: 'border-box' }} />
             </div>
+          </div>
+          <div style={{ marginBottom: 12 }}>
+            <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#6b7280', marginBottom: 4 }}>Content Fields</label>
+            <SchemaBuilder
+              schema={(() => { try { return JSON.parse(newSchema); } catch { return { fields: [] }; } })()}
+              onChange={(s) => setNewSchema(JSON.stringify(s))}
+            />
           </div>
           <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
             <button onClick={() => setShowCreate(false)} style={{ padding: '8px 16px', background: '#f3f4f6', border: 'none', borderRadius: 6, cursor: 'pointer' }}>Cancel</button>
@@ -849,12 +860,11 @@ function ComponentsPage() {
                 style={{ width: '100%', padding: '8px 12px', border: '1px solid #d1d5db', borderRadius: 6, fontSize: 14, boxSizing: 'border-box' }} />
             </div>
             <div style={{ marginBottom: 16 }}>
-              <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#6b7280', marginBottom: 4 }}>Content Schema (JSON)</label>
-              <textarea value={editSchema} onChange={(e) => setEditSchema(e.target.value)} rows={10}
-                style={{ width: '100%', padding: '8px 12px', border: '1px solid #d1d5db', borderRadius: 6, fontSize: 12, fontFamily: 'monospace', resize: 'vertical', boxSizing: 'border-box' }} />
-              <p style={{ fontSize: 11, color: '#9ca3af', margin: '4px 0 0' }}>
-                Define editable fields. Example: {'{"fields":[{"key":"text","label":"Text","type":"text","default":"Hello"}]}'}
-              </p>
+              <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#6b7280', marginBottom: 4 }}>Content Fields</label>
+              <SchemaBuilder
+                schema={(() => { try { return JSON.parse(editSchema); } catch { return { fields: [] }; } })()}
+                onChange={(newSchema) => setEditSchema(JSON.stringify(newSchema))}
+              />
             </div>
             <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
               <button onClick={() => setEditingId(null)}
