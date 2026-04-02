@@ -2,6 +2,7 @@ import { useState } from '@wordpress/element';
 import { Plus, Folder, Sparkles, X, ArrowLeft } from 'lucide-react';
 import { useBuilderStore } from '../../store/builderStore';
 import { generateSectionId } from '../../utils/helpers';
+import { getDefaultStyle } from '../../utils/constants';
 import type { Section } from '../../types/builder';
 
 type Step = 'idle' | 'choose-layout' | 'choose-structure';
@@ -36,12 +37,7 @@ export function EmptyCanvas() {
       section_type: 'container',
       variant_id: '',
       content: {},
-      style: {
-        paddingTop: '20px',
-        paddingBottom: '20px',
-        paddingLeft: '10px',
-        paddingRight: '10px',
-      },
+      style: getDefaultStyle('container'),
       layout: {
         type: 'flex',
         direction: presetVisual && presetVisual.length > 1 ? 'row' : 'column',

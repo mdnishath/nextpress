@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import { useBuilderStore } from '../../store/builderStore';
 import { generateSectionId } from '../../utils/helpers';
+import { getDefaultStyle } from '../../utils/constants';
 import type { Component, Section } from '../../types/builder';
 
 const categoryIcons: Record<string, typeof Layout> = {
@@ -91,7 +92,7 @@ function addComponentToCanvas(
       section_type: 'container',
       variant_id: '',
       content: {},
-      style: {},
+      style: getDefaultStyle('container'),
       layout: { type: 'flex', direction: 'column' },
       sort_order: 0,
       is_visible: true,
@@ -106,7 +107,7 @@ function addComponentToCanvas(
       section_type: component.slug,
       variant_id: '',
       content: defaultContent as Record<string, unknown>,
-      style: {},
+      style: getDefaultStyle(component.slug, defaultContent as Record<string, unknown>),
       layout: {},
       sort_order: 0,
       is_visible: true,

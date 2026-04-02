@@ -20,6 +20,7 @@ import { performUndo, performRedo } from '../store/historyStore';
 import { apiGet } from '../api/useApi';
 import { savePageChanges } from '../api/savePage';
 import { generateSectionId } from '../utils/helpers';
+import { getDefaultStyle } from '../utils/constants';
 import { loadAllUsedFonts } from '../utils/fontLoader';
 import type { Page, Section, Component } from '../types/builder';
 import { ErrorBoundary } from '../components/ErrorBoundary';
@@ -141,7 +142,7 @@ export function PageBuilder({ pageSlug }: PageBuilderProps) {
             section_type: isContainer ? 'container' : comp.slug,
             variant_id: '',
             content: defContent as Record<string, unknown>,
-            style: {},
+            style: getDefaultStyle(isContainer ? 'container' : comp.slug, defContent as Record<string, unknown>),
             layout: isContainer ? { type: 'flex', direction: 'column' } : {},
             sort_order: 0,
             is_visible: true,
@@ -164,7 +165,7 @@ export function PageBuilder({ pageSlug }: PageBuilderProps) {
             section_type: 'container',
             variant_id: '',
             content: defContent as Record<string, unknown>,
-            style: {},
+            style: getDefaultStyle('container'),
             layout: isGrid
               ? { type: 'grid', columns: 'repeat(2, 1fr)' }
               : { type: 'flex', direction: 'column' },
@@ -182,7 +183,7 @@ export function PageBuilder({ pageSlug }: PageBuilderProps) {
             section_type: 'container',
             variant_id: '',
             content: {},
-            style: {},
+            style: getDefaultStyle('container'),
             layout: { type: 'flex', direction: 'column' },
             sort_order: 0,
             is_visible: true,
@@ -197,7 +198,7 @@ export function PageBuilder({ pageSlug }: PageBuilderProps) {
             section_type: comp.slug,
             variant_id: '',
             content: defContent as Record<string, unknown>,
-            style: {},
+            style: getDefaultStyle(comp.slug, defContent as Record<string, unknown>),
             layout: {},
             sort_order: 0,
             is_visible: true,

@@ -5,6 +5,7 @@ import { SectionItem } from './SectionItem';
 import { SectionStyleTag } from './SectionStyleTag';
 import { Plus } from 'lucide-react';
 import { generateSectionId } from '../../utils/helpers';
+import { getDefaultStyle } from '../../utils/constants';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import type { Section, ContainerLayout } from '../../types/builder';
 
@@ -52,12 +53,7 @@ export function ContainerItem({ section }: ContainerItemProps) {
       section_type: 'container',
       variant_id: '',
       content: {},
-      style: {
-        paddingTop: '20px',
-        paddingBottom: '20px',
-        paddingLeft: '10px',
-        paddingRight: '10px',
-      },
+      style: getDefaultStyle('container'),
       layout: { type: 'flex', direction: 'column' },
       sort_order: children.length,
       is_visible: true,

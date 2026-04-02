@@ -155,25 +155,10 @@ const TAG_SIZES: Record<string, number> = { h1: 32, h2: 26, h3: 22, h4: 18, h5: 
 function SectionPreview({ section }: { section: Section }) {
   const c = section.content;
 
-  // ── Heading — all styling comes from CSS (SectionStyleTag), just render text ──
+  // ── Heading — all styling comes from CSS generator, no inline styles ──
   if (section.section_type === 'heading') {
     const text = str(c.text) || 'Add Your Heading Text Here';
-    const tag = str(c.tag) || 'h2';
-    const hasCustomSize = !!section.style.fontSize;
-    const fallbackSize = TAG_SIZES[tag] || 20;
-
-    return (
-      <div style={{
-        padding: '8px 0',
-        // Only set fallback styles when no custom CSS values exist
-        fontSize: hasCustomSize ? undefined : fallbackSize,
-        fontWeight: section.style.fontWeight ? undefined : 700,
-        lineHeight: section.style.lineHeight ? undefined : 1.3,
-        // textAlign comes from style.textAlign via CSS generator — no inline override
-      }}>
-        {text}
-      </div>
-    );
+    return <div>{text}</div>;
   }
 
   // ── Text Editor — no inline styles, CSS generator handles everything ──
