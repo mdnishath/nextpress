@@ -491,7 +491,7 @@ function ComponentsPage() {
     try {
       await apiPost(`/components/${comp.id}/toggle`, {});
       setComponents((prev) =>
-        prev.map((c) => c.id === comp.id ? { ...c, is_active: c.is_active ? 0 : 1 } : c)
+        prev.map((c) => c.id === comp.id ? { ...c, is_active: Number(c.is_active) ? 0 : 1 } : c)
       );
     } catch {
       alert('Failed to toggle');
@@ -500,7 +500,7 @@ function ComponentsPage() {
 
   const handleToggle = async (comp: ComponentItem) => {
     // If activating, no warning needed
-    if (!comp.is_active) { doToggle(comp); return; }
+    if (!Number(comp.is_active)) { doToggle(comp); return; }
     // If deactivating, check usage
     try {
       const res = await apiGet<unknown>(`/components/${comp.slug}/usage`);
@@ -615,7 +615,7 @@ function ComponentsPage() {
     }
   };
 
-  const activeCount = components.filter((c) => c.is_active).length;
+  const activeCount = components.filter((c) => Number(c.is_active)).length;
   const categories = [...new Set(components.map((c) => c.category))];
 
   const thStyle2: React.CSSProperties = {
@@ -746,7 +746,7 @@ function ComponentsPage() {
                     </span>
                   </td>
                   <td style={{ padding: '12px 16px', fontSize: 12, color: '#6b7280' }}>
-                    {comp.is_user_created ? 'Custom' : 'Built-in'}
+                    {Number(comp.is_user_created) ? 'Custom' : 'Built-in'}
                   </td>
                   <td style={{ padding: '12px 16px' }}>
                     <button
@@ -754,11 +754,11 @@ function ComponentsPage() {
                       style={{
                         padding: '4px 12px', borderRadius: 20, border: 'none', fontSize: 12, fontWeight: 600,
                         cursor: 'pointer', transition: 'all 0.15s',
-                        background: comp.is_active ? '#dcfce7' : '#f3f4f6',
-                        color: comp.is_active ? '#16a34a' : '#9ca3af',
+                        background: Number(comp.is_active) ? '#dcfce7' : '#f3f4f6',
+                        color: Number(comp.is_active) ? '#16a34a' : '#9ca3af',
                       }}
                     >
-                      {comp.is_active ? 'Active' : 'Inactive'}
+                      {Number(comp.is_active) ? 'Active' : 'Inactive'}
                     </button>
                   </td>
                   <td style={{ padding: '12px 16px', textAlign: 'right' }}>
@@ -773,7 +773,7 @@ function ComponentsPage() {
                       >
                         Edit
                       </button>
-                      {comp.is_user_created === 1 && (
+                      {Number(comp.is_user_created) === 1 && (
                         <button
                           onClick={() => handleDelete(comp)}
                           style={{

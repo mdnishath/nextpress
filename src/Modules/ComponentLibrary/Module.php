@@ -149,10 +149,16 @@ class Module extends AbstractModule
                 'content_schema' => json_encode([
                     'fields' => [
                         ['key' => 'content', 'label' => 'Content', 'type' => 'richtext', 'default' => '<p>Add your text here. Click to edit.</p>'],
+                        ['key' => 'alignment', 'label' => 'Alignment', 'type' => 'select', 'default' => 'left', 'options' => [
+                            ['label' => 'Left', 'value' => 'left'],
+                            ['label' => 'Center', 'value' => 'center'],
+                            ['label' => 'Right', 'value' => 'right'],
+                        ]],
                     ],
                 ]),
                 'default_content' => json_encode([
                     'content' => '<p>Add your text here. Click to edit.</p>',
+                    'alignment' => 'left',
                 ]),
             ],
             [

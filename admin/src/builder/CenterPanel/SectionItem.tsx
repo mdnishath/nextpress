@@ -179,9 +179,10 @@ function SectionPreview({ section }: { section: Section }) {
   // ── Text Editor ──
   if (section.section_type === 'text_editor') {
     const html = str(c.content) || '<p>Add your text here. Click to edit.</p>';
+    const alignment = str(c.alignment) || 'left';
     return (
       <div
-        style={{ padding: '8px 0', fontSize: 14, lineHeight: 1.6, color: '#374151' }}
+        style={{ padding: '8px 0', fontSize: 14, lineHeight: 1.6, color: '#374151', textAlign: alignment as 'left' | 'center' | 'right' }}
         dangerouslySetInnerHTML={{ __html: html }}
       />
     );
