@@ -6,6 +6,7 @@ import { ElementNavigator } from './ElementNavigator';
 import { ContentEditor } from '../RightPanel/ContentEditor';
 import { ContainerContentEditor } from '../RightPanel/ContainerContentEditor';
 import { HeadingContentEditor, HeadingStyleEditor } from '../RightPanel/editors/HeadingEditor';
+import { TextEditorContentEditor, TextEditorStyleEditor } from '../RightPanel/editors/TextEditorEditor';
 import { StyleEditor } from '../RightPanel/StyleEditor';
 import { AdvancedEditor } from '../RightPanel/AdvancedEditor';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
@@ -92,12 +93,16 @@ export function LeftPanel() {
                   ? <ContainerContentEditor section={section} />
                   : section.section_type === 'heading'
                     ? <HeadingContentEditor section={section} />
-                    : <ContentEditor section={section} />
+                    : section.section_type === 'text_editor'
+                      ? <TextEditorContentEditor section={section} />
+                      : <ContentEditor section={section} />
               )}
               {rightTab === 'style' && (
                 section.section_type === 'heading'
                   ? <HeadingStyleEditor section={section} />
-                  : <StyleEditor section={section} />
+                  : section.section_type === 'text_editor'
+                    ? <TextEditorStyleEditor section={section} />
+                    : <StyleEditor section={section} />
               )}
               {rightTab === 'advanced' && <AdvancedEditor section={section} />}
             </ErrorBoundary>
