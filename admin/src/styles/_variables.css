@@ -1,0 +1,29 @@
+/* ─── NextPress Builder — Admin UI Styles ─── */
+
+:root {
+  --npb-sidebar-bg: #09090b;
+  --npb-sidebar-text: #fafafa;
+  --npb-sidebar-text-muted: #a1a1aa;
+  --npb-panel-bg: #ffffff;
+  --npb-canvas-bg: #f4f4f5;
+  --npb-selected: #7c3aed;
+  --npb-selected-light: #ede9fe;
+  --npb-hover: #e5e7eb;
+  --npb-drop-indicator: #3b82f6;
+  --npb-primary: #7c3aed;
+  --npb-primary-hover: #6d28d9;
+  --npb-success: #22c55e;
+  --npb-error: #ef4444;
+  --npb-text: #09090b;
+  --npb-text-secondary: #6b7280;
+  --npb-text-muted: #a1a1aa;
+  --npb-border: #e5e7eb;
+  --npb-border-dark: #d1d5db;
+  --npb-radius: 8px;
+  --npb-radius-sm: 4px;
+  --npb-left-width: 320px;
+  --npb-right-width: 360px;
+  --npb-toolbar-height: 56px;
+  --npb-font: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
+  --npb-font-mono: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+}

@@ -1,0 +1,92 @@
+/* ─── Stepper Input (increment/decrement) ─── */
+.el-stepper {
+  display: flex;
+  align-items: stretch;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
+  overflow: hidden;
+  width: 70px;
+}
+
+.el-stepper__input {
+  flex: 1;
+  min-width: 0;
+  padding: 5px 6px;
+  border: none;
+  background: rgba(255, 255, 255, 0.06);
+  color: #e0e0e0;
+  font-size: 12px;
+  font-family: var(--npb-font);
+  text-align: center;
+  outline: none;
+  -moz-appearance: textfield;
+}
+
+.el-stepper__input::-webkit-outer-spin-button,
+.el-stepper__input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+.el-stepper__input:focus {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.el-stepper__btns {
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
+}
+
+.el-stepper__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  flex: 1;
+  border: none;
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.1s;
+}
+
+.el-stepper__btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
+.el-stepper__btn:not(:last-child) {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* ─── Device Button ─── */
+.el-device-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 0;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.35);
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 600;
+  font-family: var(--npb-font);
+  transition: all 0.15s;
+}
+
+.el-device-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.el-device-btn--active {
+  border-color: var(--npb-primary);
+  background: rgba(124, 58, 237, 0.15);
+  color: #fff;
+}
+

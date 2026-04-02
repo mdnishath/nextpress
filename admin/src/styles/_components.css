@@ -1,0 +1,157 @@
+/* ─── No Selection (dark) ─── */
+.npb-right-panel--dark .npb-no-selection {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.npb-right-panel--dark .npb-no-selection__icon {
+  opacity: 0.2;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* ─── Right Panel — No Selection ─── */
+.npb-no-selection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 24px;
+  text-align: center;
+  color: var(--npb-text-muted);
+}
+
+.npb-no-selection__icon {
+  margin-bottom: 12px;
+  opacity: 0.3;
+}
+
+/* ─── Component Palette ─── */
+.npb-palette-search {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--npb-radius-sm);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--npb-sidebar-text);
+  font-size: 13px;
+  font-family: var(--npb-font);
+  outline: none;
+  margin-bottom: 12px;
+}
+
+.npb-palette-search:focus {
+  border-color: var(--npb-primary);
+}
+
+.npb-palette-search::placeholder {
+  color: var(--npb-sidebar-text-muted);
+}
+
+.npb-palette-category {
+  margin-bottom: 16px;
+}
+
+.npb-palette-category__label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--npb-sidebar-text-muted);
+  margin-bottom: 8px;
+  padding-left: 4px;
+}
+
+.npb-palette-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.npb-component-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--npb-radius-sm);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--npb-sidebar-text-muted);
+  font-size: 11px;
+  font-weight: 500;
+  cursor: grab;
+  transition: all 0.15s ease;
+  text-align: center;
+  user-select: none;
+}
+
+.npb-component-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--npb-sidebar-text);
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+.npb-component-card:active {
+  cursor: grabbing;
+}
+
+.npb-component-card--dragging {
+  opacity: 0.5;
+}
+
+/* ─── Navigator Tree ─── */
+.npb-navigator-tree {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.npb-tree-item {
+  padding: 6px 8px;
+  border-radius: var(--npb-radius-sm);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--npb-sidebar-text-muted);
+  transition: all 0.15s ease;
+}
+
+.npb-tree-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--npb-sidebar-text);
+}
+
+.npb-tree-item--selected {
+  background: rgba(124, 58, 237, 0.2);
+  color: #fff;
+}
+
+.npb-tree-item__indent {
+  display: inline-block;
+}
+
+.npb-tree-item__toggle {
+  width: 16px;
+  height: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.npb-tree-item__icon {
+  flex-shrink: 0;
+  opacity: 0.6;
+}
+
+.npb-tree-item__label {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+

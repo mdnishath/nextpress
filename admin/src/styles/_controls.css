@@ -1,0 +1,554 @@
+/* ─── Elementor-style Sections ─── */
+.el-section {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.el-section__header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 14px 20px;
+  border: none;
+  background: none;
+  cursor: default;
+  font-family: var(--npb-font);
+  color: #fff;
+}
+
+.el-section__header--collapsible {
+  cursor: pointer;
+}
+
+.el-section__header--collapsible:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.el-section__arrow {
+  font-size: 8px;
+  color: rgba(255, 255, 255, 0.5);
+  width: 12px;
+}
+
+.el-section__title {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.el-section__body {
+  padding: 0 20px 16px;
+}
+
+/* ─── Control Row ─── */
+.el-control {
+  margin-bottom: 14px;
+}
+
+.el-control--row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.el-control__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  gap: 8px;
+}
+
+.el-control__left {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.el-control__right {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.el-control__label {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  white-space: nowrap;
+}
+
+/* ─── Responsive Icon ─── */
+.el-responsive-icon {
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 11px;
+  padding: 0;
+  opacity: 0.5;
+  transition: opacity 0.15s;
+}
+
+.el-responsive-icon:hover {
+  opacity: 1;
+}
+
+/* ─── Unit Button ─── */
+.el-unit-btn {
+  padding: 2px 4px;
+  border: none;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--npb-font);
+  white-space: nowrap;
+}
+
+.el-unit-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+/* ─── Input ─── */
+.el-input {
+  padding: 6px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #e0e0e0;
+  font-size: 12px;
+  font-family: var(--npb-font);
+  outline: none;
+  width: 60px;
+  text-align: center;
+  -moz-appearance: textfield;
+}
+
+.el-input::-webkit-outer-spin-button,
+.el-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+.el-input:focus {
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.el-input--full {
+  width: 100%;
+  text-align: left;
+}
+
+/* ─── Select ─── */
+.el-select {
+  padding: 7px 28px 7px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #e0e0e0;
+  font-size: 12px;
+  font-family: var(--npb-font);
+  outline: none;
+  cursor: pointer;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23888' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  flex-shrink: 0;
+}
+
+.el-select:focus {
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+/* ─── Textarea ─── */
+.el-textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #e0e0e0;
+  font-size: 12px;
+  font-family: var(--npb-font-mono);
+  outline: none;
+  resize: vertical;
+}
+
+.el-textarea:focus {
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+/* ─── Icon Group (Elementor-style icon buttons) ─── */
+.el-icon-group {
+  display: flex;
+  gap: 0;
+}
+
+.el-icon-group__btn {
+  width: 30px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-right: none;
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.12s;
+  font-size: 12px;
+}
+
+.el-icon-group__btn:first-child {
+  border-radius: 3px 0 0 3px;
+}
+
+.el-icon-group__btn:last-child {
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0 3px 3px 0;
+}
+
+.el-icon-group__btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.el-icon-group__btn--active {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+/* ─── Slider + Input ─── */
+.el-slider-input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.el-slider-input__range {
+  flex: 1;
+  height: 3px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+
+.el-slider-input__range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+.el-slider-input__range::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+.el-slider-input__num {
+  width: 52px;
+  padding: 5px 6px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #e0e0e0;
+  font-size: 12px;
+  font-family: var(--npb-font);
+  text-align: center;
+  outline: none;
+  -moz-appearance: textfield;
+}
+
+.el-slider-input__num::-webkit-outer-spin-button,
+.el-slider-input__num::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+.el-slider-input__num:focus {
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+/* ─── 4-Input Row (margin/padding/radius) ─── */
+.el-four-input {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.el-four-input .el-input {
+  flex: 1;
+  border-radius: 0;
+  border-right: none;
+  min-width: 0;
+  width: auto;
+}
+
+.el-four-input .el-input:first-child {
+  border-radius: 3px 0 0 3px;
+}
+
+.el-four-input .el-input:nth-child(4) {
+  border-right: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.el-four-input__labels {
+  display: flex;
+  gap: 0;
+  margin-top: 3px;
+}
+
+.el-four-input__labels span {
+  flex: 1;
+  text-align: center;
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.35);
+  text-transform: uppercase;
+}
+
+/* ─── Link Button ─── */
+.el-link-btn {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0 3px 3px 0;
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.el-link-btn:hover {
+  color: #fff;
+}
+
+.el-link-btn--active {
+  color: var(--npb-primary);
+  background: rgba(124, 58, 237, 0.15);
+}
+
+/* ─── Gap Row ─── */
+.el-gap-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+}
+
+.el-gap-row__input {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.el-gap-row__input .el-input {
+  width: 100%;
+  border-radius: 0;
+  border-right: none;
+}
+
+.el-gap-row__input:first-child .el-input {
+  border-radius: 3px 0 0 3px;
+}
+
+.el-gap-row__label {
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.35);
+  margin-top: 3px;
+  text-transform: uppercase;
+}
+
+/* ─── Hover Tabs ─── */
+.el-hover-tabs {
+  display: flex;
+  margin-bottom: 12px;
+  border-radius: 3px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.el-hover-tabs__btn {
+  flex: 1;
+  padding: 7px 0;
+  border: none;
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--npb-font);
+  transition: all 0.12s;
+}
+
+.el-hover-tabs__btn:not(:last-child) {
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.el-hover-tabs__btn--active {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
+.el-hover-tabs__btn:hover:not(.el-hover-tabs__btn--active) {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* ─── Color Input ─── */
+.el-color-input {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.el-color-input__swatch {
+  width: 28px;
+  height: 28px;
+  border-radius: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.el-color-input__native {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.el-clear-btn {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: none;
+  color: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.el-clear-btn:hover {
+  color: #ef4444;
+}
+
+/* ─── Media Picker ─── */
+.el-media-upload {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 20px;
+  border: 2px dashed rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.03);
+  color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  font-size: 13px;
+  font-family: var(--npb-font);
+  transition: all 0.15s;
+}
+
+.el-media-upload:hover {
+  border-color: #7c3aed;
+  color: #7c3aed;
+  background: rgba(124, 58, 237, 0.05);
+}
+
+.el-media-preview {
+  position: relative;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.el-media-preview__img {
+  display: block;
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+}
+
+.el-media-preview__actions {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  display: flex;
+  gap: 4px;
+}
+
+.el-media-preview__btn {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.el-media-preview__btn:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.el-media-preview__btn--remove:hover {
+  background: #ef4444;
+}
+
+/* ─── Typography Popup ─── */
+.el-typo-popup {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 100;
+  width: 240px;
+  padding: 12px;
+  background: #1a1a2e;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  margin-top: 4px;
+}
+
+/* ─── Hint Text ─── */
+.el-hint {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.35);
+  font-style: italic;
+  margin: -6px 0 12px;
+  line-height: 1.4;
+}
+

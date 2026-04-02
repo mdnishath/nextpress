@@ -1,0 +1,136 @@
+/* ─── 3-Panel Layout ─── */
+.npb-panels {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* ─── Left Panel ─── */
+.npb-left-panel {
+  width: var(--npb-left-width);
+  background: var(--npb-sidebar-bg);
+  color: var(--npb-sidebar-text);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  overflow: visible;
+  position: relative;
+  z-index: 10;
+}
+
+.npb-left-panel--collapsed {
+  width: 28px;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--npb-sidebar-bg);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 8px;
+}
+
+/* ─── Panel Collapse/Expand Buttons ─── */
+.npb-panel-collapse-btn {
+  position: absolute;
+  top: 50%;
+  right: -12px;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 48px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-left: none;
+  border-radius: 0 6px 6px 0;
+  background: var(--npb-sidebar-bg);
+  color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+  transition: all 0.15s;
+}
+
+.npb-panel-collapse-btn:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.npb-panel-expand-btn {
+  width: 20px;
+  height: 40px;
+  border: none;
+  background: none;
+  color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s;
+}
+
+.npb-panel-expand-btn:hover {
+  color: #fff;
+}
+
+.npb-panel-tabs {
+  display: flex;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
+}
+
+.npb-panel-tab {
+  flex: 1;
+  padding: 10px 0;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--npb-sidebar-text-muted);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: var(--npb-font);
+}
+
+.npb-panel-tab:hover {
+  color: var(--npb-sidebar-text);
+}
+
+.npb-panel-tab--active {
+  color: #fff;
+  border-bottom-color: var(--npb-primary);
+}
+
+.npb-left-panel__content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 12px;
+  min-height: 0;
+}
+
+/* Edit content inside left panel */
+.npb-left-panel .npb-edit-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.12) transparent;
+}
+
+.npb-left-panel .npb-edit-content::-webkit-scrollbar {
+  width: 3px;
+}
+
+.npb-left-panel .npb-edit-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.npb-left-panel .npb-edit-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 3px;
+}
+

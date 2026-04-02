@@ -1,0 +1,190 @@
+/* ─── Toast Notifications ─── */
+.npb-toasts {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 100001;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.npb-toast {
+  padding: 12px 16px;
+  border-radius: var(--npb-radius);
+  font-size: 13px;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  animation: npb-toast-in 0.2s ease;
+  max-width: 360px;
+}
+
+.npb-toast--success {
+  background: var(--npb-success);
+  color: #fff;
+}
+
+.npb-toast--error {
+  background: var(--npb-error);
+  color: #fff;
+}
+
+.npb-toast--info {
+  background: var(--npb-sidebar-bg);
+  color: var(--npb-sidebar-text);
+}
+
+@keyframes npb-toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ─── Scrollbar Styling ─── */
+.npb-left-panel__content::-webkit-scrollbar,
+.npb-right-panel__content::-webkit-scrollbar,
+.npb-canvas-wrapper::-webkit-scrollbar {
+  width: 6px;
+}
+
+.npb-left-panel__content::-webkit-scrollbar-track,
+.npb-canvas-wrapper::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.npb-left-panel__content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 3px;
+}
+
+.npb-right-panel__content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.npb-right-panel__content::-webkit-scrollbar-thumb {
+  background: var(--npb-border);
+  border-radius: 3px;
+}
+
+.npb-canvas-wrapper::-webkit-scrollbar-thumb {
+  background: var(--npb-border-dark);
+  border-radius: 3px;
+}
+
+/* ─── Form Controls (Right Panel) ─── */
+.npb-field {
+  margin-bottom: 16px;
+}
+
+.npb-field__label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--npb-text-secondary);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.npb-field__input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid var(--npb-border);
+  border-radius: var(--npb-radius-sm);
+  font-size: 13px;
+  font-family: var(--npb-font);
+  color: var(--npb-text);
+  background: #fff;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.npb-field__input:focus {
+  border-color: var(--npb-primary);
+}
+
+.npb-field__input::placeholder {
+  color: var(--npb-text-muted);
+}
+
+/* ─── Confirm Dialog ─── */
+.npb-confirm-overlay {
+  position: fixed;
+  top: 0; right: 0; bottom: 0; left: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100002;
+}
+
+.npb-confirm-dialog {
+  background: #fff;
+  border-radius: var(--npb-radius);
+  padding: 24px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.npb-confirm-dialog__title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 8px;
+}
+
+.npb-confirm-dialog__message {
+  font-size: 14px;
+  color: var(--npb-text-secondary);
+  margin: 0 0 20px;
+}
+
+.npb-confirm-dialog__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.npb-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: var(--npb-radius-sm);
+  font-size: 13px;
+  font-weight: 500;
+  font-family: var(--npb-font);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.npb-btn--secondary {
+  background: var(--npb-canvas-bg);
+  color: var(--npb-text);
+}
+
+.npb-btn--secondary:hover {
+  background: var(--npb-border);
+}
+
+.npb-btn--primary {
+  background: var(--npb-primary);
+  color: #fff;
+}
+
+.npb-btn--primary:hover {
+  background: var(--npb-primary-hover);
+}
+
+.npb-btn--danger {
+  background: var(--npb-error);
+  color: #fff;
+}
+
+.npb-btn--danger:hover {
+  background: #dc2626;
+}
+

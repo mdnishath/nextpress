@@ -1,0 +1,149 @@
+/* ─── Layout / Structure Chooser ─── */
+.npb-chooser__close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #9ca3af;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+}
+
+.npb-chooser__close:hover {
+  color: #374151;
+  background: #f3f4f6;
+}
+
+.npb-chooser__top-bar {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  right: 16px;
+  padding-right: 32px;
+}
+
+.npb-chooser__back {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #9ca3af;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+}
+
+.npb-chooser__back:hover {
+  color: #374151;
+  background: #f3f4f6;
+}
+
+.npb-chooser__title {
+  font-size: 16px;
+  color: #6b7280;
+  margin: 0 0 24px;
+  font-weight: 400;
+}
+
+.npb-chooser__options {
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+}
+
+.npb-chooser__option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: #6b7280;
+  font-family: var(--npb-font);
+  padding: 8px;
+  border-radius: 8px;
+  transition: all 0.15s;
+}
+
+.npb-chooser__option:hover {
+  background: #f9fafb;
+  color: #374151;
+}
+
+/* Flexbox thumbnail — solid grey blocks */
+.npb-chooser__thumb {
+  width: 100px;
+  height: 80px;
+  display: grid;
+  gap: 3px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.npb-chooser__thumb--flexbox {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+.npb-chooser__thumb--flexbox > div {
+  background: #d1d5db;
+  border-radius: 2px;
+}
+
+/* Grid thumbnail — dashed outline blocks */
+.npb-chooser__thumb--grid {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+.npb-chooser__thumb--grid > div {
+  border: 1.5px dashed #d1d5db;
+  border-radius: 2px;
+}
+
+/* ─── Structure Presets Grid ─── */
+.npb-chooser__presets {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.npb-chooser__preset {
+  display: flex;
+  gap: 3px;
+  align-items: stretch;
+  height: 44px;
+  padding: 6px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.npb-chooser__preset:hover {
+  border-color: #7c3aed;
+  background: #ede9fe;
+}
+
+.npb-chooser__preset-col {
+  background: #d1d5db;
+  border-radius: 2px;
+  min-height: 100%;
+}
+

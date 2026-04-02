@@ -1,0 +1,337 @@
+/* ─── Center Canvas ─── */
+.npb-canvas-wrapper {
+  flex: 1;
+  overflow-y: auto;
+  padding: 40px 16px;
+  display: flex;
+  justify-content: center;
+  background: #f4f4f5;
+}
+
+.npb-canvas {
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.npb-canvas--tablet {
+  max-width: 768px;
+}
+
+.npb-canvas--mobile {
+  max-width: 375px;
+}
+
+/* ─── Section Item on Canvas ─── */
+/* All sections — flex column so content stretches to fill height */
+.npb-section-item {
+  position: relative;
+  outline: 1px solid transparent;
+  outline-offset: -1px;
+  transition: outline-color 0.15s ease;
+  cursor: pointer;
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.npb-section-item:hover {
+  outline-color: rgba(124, 58, 237, 0.3);
+}
+
+.npb-section-item--selected {
+  outline: 2px solid var(--npb-selected);
+  outline-offset: -2px;
+}
+
+.npb-section-item--hovered {
+  outline-color: var(--npb-drop-indicator);
+}
+
+.npb-section-item--hidden {
+  opacity: 0.4;
+}
+
+/* Label tab — Elementor-style top-left tag */
+.npb-section-item__label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translateY(-100%);
+  padding: 2px 10px;
+  background: var(--npb-selected);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  border-radius: var(--npb-radius-sm) var(--npb-radius-sm) 0 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+  z-index: 10;
+}
+
+.npb-section-item:hover > .npb-section-item__label,
+.npb-section-item--selected > .npb-section-item__label {
+  opacity: 1;
+}
+
+/* Controls — Elementor-style top-right buttons */
+.npb-section-item__controls {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translateY(-100%);
+  display: flex;
+  gap: 1px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+  z-index: 10;
+}
+
+.npb-section-item:hover > .npb-section-item__controls,
+.npb-section-item--selected > .npb-section-item__controls {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.npb-section-control-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 24px;
+  border: none;
+  border-radius: 0;
+  background: var(--npb-selected);
+  color: #fff;
+  cursor: pointer;
+  font-size: 13px;
+  transition: background 0.15s ease;
+}
+
+.npb-section-control-btn:first-child {
+  border-radius: var(--npb-radius-sm) 0 0 0;
+}
+.npb-section-control-btn:last-child {
+  border-radius: 0 var(--npb-radius-sm) 0 0;
+}
+
+.npb-section-control-btn:hover {
+  background: var(--npb-primary-hover);
+}
+
+.npb-section-control-btn--danger:hover {
+  background: var(--npb-error);
+}
+
+/* Content wrapper — fills parent, works as flex child */
+/* Content wrapper — fills parent height for centering to work */
+.npb-section-item__content {
+  min-height: inherit;
+  min-width: 0;
+  flex: 1;
+}
+
+/* Empty container dashed border (Elementor-style) */
+/* Container inner div — fills parent height so justify/align centering works */
+.npb-container {
+  flex: 1;
+  min-height: inherit;
+  position: relative;
+  z-index: 1;
+}
+
+/* Safari-compatible: empty container dashed border */
+.npb-container:empty {
+  border: 1px dashed #d1d5db;
+  border-radius: var(--npb-radius);
+}
+
+.npb-container--empty {
+  border: 1px dashed #d1d5db;
+  border-radius: var(--npb-radius);
+}
+
+/* Child sections inside containers — flex children need min-width: 0 to prevent overflow */
+.npb-container > .npb-section-item {
+  min-width: 0;
+  min-height: 0;
+}
+
+/* Nested containers — dashed border, min height */
+.npb-container .npb-container {
+  border: 1px dashed #e5e7eb;
+  border-radius: 4px;
+  min-height: 60px;
+}
+
+/* Clean + button (Elementor-style) */
+.npb-add-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid #d1d5db;
+  background: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+  transition: all 0.15s ease;
+}
+.npb-add-btn:hover {
+  border-color: var(--npb-selected);
+  color: var(--npb-selected);
+  background: var(--npb-selected-light);
+}
+
+/* Structure preset button */
+.npb-preset-btn {
+  width: 56px;
+  height: 36px;
+  padding: 4px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+  display: flex;
+  gap: 2px;
+  align-items: stretch;
+  transition: all 0.15s ease;
+}
+.npb-preset-btn:hover {
+  border-color: var(--npb-selected);
+  background: #f5f3ff;
+}
+
+/* (nested container styles merged above) */
+
+/* ─── Drop Zones ─── */
+.npb-drop-zone {
+  height: 4px;
+  margin: -2px 0;
+  position: relative;
+  z-index: 10;
+  transition: height 0.15s ease;
+}
+
+.npb-drop-zone--active {
+  height: 40px;
+  margin: 4px 0;
+  border: 2px dashed var(--npb-drop-indicator);
+  border-radius: var(--npb-radius);
+  background: rgba(59, 130, 246, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: var(--npb-drop-indicator);
+  font-weight: 600;
+}
+
+/* ─── Add Section Button ─── */
+.npb-add-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  margin: 8px 0;
+  border: 2px dashed var(--npb-border);
+  border-radius: var(--npb-radius);
+  background: transparent;
+  color: var(--npb-text-muted);
+  font-size: 14px;
+  font-family: var(--npb-font);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  width: 100%;
+}
+
+.npb-add-section:hover {
+  border-color: var(--npb-primary);
+  color: var(--npb-primary);
+  background: rgba(124, 58, 237, 0.04);
+}
+
+/* ─── Empty Canvas (Elementor-style drop zone) ─── */
+.npb-empty-drop {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  padding: 40px;
+}
+
+.npb-empty-drop__inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  width: 100%;
+  max-width: 700px;
+  min-height: 180px;
+  border: 2px dashed #d1d5db;
+  border-radius: 8px;
+  padding: 40px 24px;
+}
+
+.npb-empty-drop__buttons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.npb-empty-drop__btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  background: #e5e7eb;
+  color: #6b7280;
+}
+
+.npb-empty-drop__btn:hover {
+  transform: scale(1.08);
+}
+
+.npb-empty-drop__btn--dark {
+  background: #6b7280;
+  color: #fff;
+}
+
+.npb-empty-drop__btn--dark:hover {
+  background: #4b5563;
+}
+
+.npb-empty-drop__btn--accent {
+  background: #ede9fe;
+  color: #7c3aed;
+}
+
+.npb-empty-drop__btn--accent:hover {
+  background: #7c3aed;
+  color: #fff;
+}
+
+.npb-empty-drop__text {
+  font-size: 14px;
+  color: #9ca3af;
+  margin: 0;
+  font-style: normal;
+}
+

@@ -1,0 +1,85 @@
+/* ─── Toolbar ─── */
+.npb-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--npb-toolbar-height);
+  padding: 0 16px;
+  background: var(--npb-sidebar-bg);
+  color: var(--npb-sidebar-text);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
+}
+
+.npb-toolbar__left,
+.npb-toolbar__center,
+.npb-toolbar__right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.npb-toolbar__left {
+  flex: 0 0 auto;
+}
+
+.npb-toolbar__center {
+  flex: 1;
+  justify-content: center;
+}
+
+.npb-toolbar__right {
+  flex: 0 0 auto;
+}
+
+.npb-toolbar-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border: none;
+  border-radius: var(--npb-radius-sm);
+  background: transparent;
+  color: var(--npb-sidebar-text-muted);
+  font-size: 13px;
+  font-family: var(--npb-font);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.npb-toolbar-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--npb-sidebar-text);
+}
+
+.npb-toolbar-btn--active {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
+.npb-toolbar-btn--primary {
+  background: var(--npb-primary);
+  color: #fff;
+}
+
+.npb-toolbar-btn--primary:hover {
+  background: var(--npb-primary-hover);
+}
+
+.npb-toolbar-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.npb-toolbar-divider {
+  width: 1px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.12);
+  margin: 0 4px;
+}
+
+.npb-toolbar__save-status {
+  font-size: 12px;
+  color: var(--npb-sidebar-text-muted);
+}
+

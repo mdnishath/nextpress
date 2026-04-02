@@ -1,0 +1,222 @@
+/* ─── Accordion Section ─── */
+.npb-accordion {
+  border-bottom: 1px solid var(--npb-border);
+}
+
+.npb-accordion__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 12px 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: var(--npb-font);
+  color: var(--npb-text);
+}
+
+.npb-accordion__header:hover {
+  color: var(--npb-primary);
+}
+
+.npb-accordion__title {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.npb-accordion__chevron {
+  color: var(--npb-text-muted);
+  flex-shrink: 0;
+}
+
+.npb-accordion__body {
+  padding: 0 0 16px;
+}
+
+/* ─── Slider + Input ─── */
+.npb-slider-input {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.npb-slider-input__slider {
+  flex: 1;
+  height: 4px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--npb-border);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+
+.npb-slider-input__slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--npb-primary);
+  cursor: pointer;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.npb-slider-input__slider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--npb-primary);
+  cursor: pointer;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.npb-slider-input__number {
+  width: 56px;
+  padding: 5px 6px;
+  border: 1px solid var(--npb-border);
+  border-radius: var(--npb-radius-sm);
+  font-size: 12px;
+  font-family: var(--npb-font-mono);
+  text-align: center;
+  color: var(--npb-text);
+  outline: none;
+  -moz-appearance: textfield;
+}
+
+.npb-slider-input__number::-webkit-outer-spin-button,
+.npb-slider-input__number::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.npb-slider-input__number:focus {
+  border-color: var(--npb-primary);
+}
+
+/* ─── Unit Switcher ─── */
+.npb-unit-switcher {
+  padding: 4px 6px;
+  border: 1px solid var(--npb-border);
+  border-radius: var(--npb-radius-sm);
+  background: var(--npb-canvas-bg);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--npb-text-secondary);
+  cursor: pointer;
+  text-transform: uppercase;
+  font-family: var(--npb-font);
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.npb-unit-switcher:hover {
+  border-color: var(--npb-primary);
+  color: var(--npb-primary);
+}
+
+/* ─── Hover Tabs (Normal/Hover) ─── */
+.npb-hover-tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 12px;
+  border: 1px solid var(--npb-border);
+  border-radius: var(--npb-radius-sm);
+  overflow: hidden;
+}
+
+.npb-hover-tabs__tab {
+  flex: 1;
+  padding: 6px 0;
+  border: none;
+  background: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--npb-text-muted);
+  cursor: pointer;
+  font-family: var(--npb-font);
+  transition: all 0.15s;
+}
+
+.npb-hover-tabs__tab:not(:last-child) {
+  border-right: 1px solid var(--npb-border);
+}
+
+.npb-hover-tabs__tab--active {
+  background: var(--npb-selected-light);
+  color: var(--npb-primary);
+}
+
+.npb-hover-tabs__tab:hover:not(.npb-hover-tabs__tab--active) {
+  background: var(--npb-canvas-bg);
+}
+
+/* ─── Icon Toggle Group ─── */
+.npb-icon-toggle-group {
+  display: flex;
+  gap: 2px;
+  border: 1px solid var(--npb-border);
+  border-radius: var(--npb-radius-sm);
+  overflow: hidden;
+  background: var(--npb-border);
+}
+
+.npb-icon-toggle-group__btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 0;
+  border: none;
+  background: #fff;
+  color: var(--npb-text-muted);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.npb-icon-toggle-group__btn:hover {
+  background: var(--npb-canvas-bg);
+  color: var(--npb-text);
+}
+
+.npb-icon-toggle-group__btn--active {
+  background: var(--npb-selected-light);
+  color: var(--npb-primary);
+}
+
+/* ─── Linked Gap Control ─── */
+.npb-linked-gap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.npb-linked-gap__input {
+  flex: 1;
+}
+
+.npb-linked-gap__link {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--npb-text-muted);
+  border-radius: var(--npb-radius-sm);
+  transition: all 0.15s;
+}
+
+.npb-linked-gap__link:hover {
+  background: var(--npb-canvas-bg);
+}
+
+.npb-linked-gap__link--active {
+  color: var(--npb-primary);
+}
