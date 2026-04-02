@@ -45,7 +45,7 @@ export function StepperInput({
     if (min !== undefined && newNum < min) newNum = min;
     if (max !== undefined && newNum > max) newNum = max;
     const u = currentUnit || (placeholder ? extractUnit(placeholder) : 'px');
-    onChange(newNum === 0 && !currentUnit ? '' : `${newNum}${u}`);
+    onChange(`${newNum}${u}`);
   }, [onChange, currentUnit, min, max, placeholder]);
 
   const increment = useCallback(() => applyChange(numVal + step), [numVal, step, applyChange]);
@@ -76,7 +76,7 @@ export function StepperInput({
       <input
         type="text"
         className="el-stepper__input"
-        value={value ? String(numVal) : ''}
+        value={String(numVal)}
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
         placeholder={placeholder}

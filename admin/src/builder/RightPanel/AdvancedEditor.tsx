@@ -52,9 +52,9 @@ function SpacingRow({ label, sectionId, prefix }: {
             key={side}
             type="number"
             className="el-input"
-            value={values[i]?.replace(/[a-z%]+/i, '') || ''}
-            onChange={(e) => handleChange(i, e.target.value ? `${e.target.value}${unit}` : '')}
-            placeholder=""
+            value={values[i]?.replace(/[a-z%]+/i, '') || '0'}
+            onChange={(e) => handleChange(i, `${e.target.value || '0'}${unit}`)}
+            placeholder="0"
           />
         ))}
         <button type="button" className={`el-link-btn ${linked ? 'el-link-btn--active' : ''}`} onClick={() => setLinked(!linked)}>
