@@ -238,6 +238,34 @@ export function generateSectionCSS(section: Section): string {
     parts.push(`@media (min-width: ${DESKTOP_MIN}px) {\n  ${selector} {\n  ${desktop.join('\n  ')}\n  }\n}`);
   }
 
+  // Force typography on descendant elements (prevents browser/theme CSS overriding inheritance)
+  if (section.section_type !== 'container') {
+    const typoBase: string[] = [];
+    const typoTablet: string[] = [];
+    const typoDesktop: string[] = [];
+    const typoKeys = ['fontSize', 'fontFamily', 'fontWeight', 'fontStyle', 'lineHeight',
+      'letterSpacing', 'textAlign', 'textColor', 'textDecoration', 'textTransform'];
+    for (const key of typoKeys) {
+      const val = style[key as keyof SectionStyle];
+      if (!val) continue;
+      const cssProp = STYLE_KEY_MAP[key] || toKebab(key);
+      if (key === 'fontFamily') {
+        const fv = isResponsiveValue(val) ? val : { mobile: val as string };
+        const quote = (v: string) => v ? (v.includes(' ') ? `"${v}", sans-serif` : `${v}, sans-serif`) : '';
+        const rv = fv as { mobile: string; tablet?: string; desktop?: string };
+        if (rv.mobile) typoBase.push(`  font-family: ${quote(rv.mobile)};`);
+        if (rv.tablet && rv.tablet !== rv.mobile) typoTablet.push(`  font-family: ${quote(rv.tablet)};`);
+        if (rv.desktop && rv.desktop !== (rv.tablet ?? rv.mobile)) typoDesktop.push(`  font-family: ${quote(rv.desktop)};`);
+      } else {
+        pushDecl(val as ResponsiveString, cssProp, typoBase, typoTablet, typoDesktop);
+      }
+    }
+    const childSel = `${selector} p,\n${selector} span,\n${selector} div,\n${selector} a,\n${selector} li,\n${selector} h1,\n${selector} h2,\n${selector} h3,\n${selector} h4,\n${selector} h5,\n${selector} h6`;
+    if (typoBase.length > 0) parts.push(`${childSel} {\n${typoBase.join('\n')}\n}`);
+    if (typoTablet.length > 0) parts.push(`@media (min-width: ${TABLET_MIN}px) {\n  ${childSel} {\n  ${typoTablet.join('\n  ')}\n  }\n}`);
+    if (typoDesktop.length > 0) parts.push(`@media (min-width: ${DESKTOP_MIN}px) {\n  ${childSel} {\n  ${typoDesktop.join('\n  ')}\n  }\n}`);
+  }
+
   // ── Background overlay ::before pseudo-element ──
   if (overlayColor) {
     const opacity = parseInt(String(getValueForBreakpoint(style.backgroundOverlayOpacity as ResponsiveString, 'mobile') || '50')) / 100;
@@ -423,6 +451,31 @@ export function generateBuilderCSS(section: Section, bp: Breakpoint): string {
   const parts: string[] = [];
   if (decls.length > 0) {
     parts.push(`${selector} {\n${decls.join('\n')}\n}`);
+  }
+
+  // Force typography on descendant elements (WP admin CSS overrides inheritance)
+  if (section.section_type !== 'container') {
+    const typoDecls: string[] = [];
+    const typoKeys = ['fontSize', 'fontFamily', 'fontWeight', 'fontStyle', 'lineHeight',
+      'letterSpacing', 'textAlign', 'textColor', 'textDecoration', 'textTransform'] as const;
+    for (const key of typoKeys) {
+      const val = style[key];
+      if (!val) continue;
+      const cssProp = STYLE_KEY_MAP[key] || toKebab(key);
+      if (key === 'fontFamily') {
+        const resolved = resolveForBreakpoint(val as ResponsiveString, bp);
+        if (resolved) {
+          const quoted = resolved.includes(' ') ? `"${resolved}", sans-serif` : `${resolved}, sans-serif`;
+          typoDecls.push(`  font-family: ${quoted};`);
+        }
+      } else {
+        const resolved = resolveForBreakpoint(val as ResponsiveString, bp);
+        if (resolved) typoDecls.push(`  ${cssProp}: ${resolved};`);
+      }
+    }
+    if (typoDecls.length > 0) {
+      parts.push(`${selector} p,\n${selector} span,\n${selector} div,\n${selector} a,\n${selector} li,\n${selector} h1,\n${selector} h2,\n${selector} h3,\n${selector} h4,\n${selector} h5,\n${selector} h6 {\n${typoDecls.join('\n')}\n}`);
+    }
   }
 
   // Overlay ::before
