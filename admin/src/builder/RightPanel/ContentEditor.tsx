@@ -61,15 +61,21 @@ export function ContentEditor({ section }: ContentEditorProps) {
   };
 
   return (
-    <div>
-      {fields.map((field: ContentField) => (
-        <FieldRenderer
-          key={field.key}
-          field={field}
-          value={section.content[field.key]}
-          onChange={(value) => handleChange(field.key, value)}
-        />
-      ))}
+    <div className="el-section">
+      <div className="el-section__header">
+        <span className="el-section__arrow">▼</span>
+        <span className="el-section__title">Content</span>
+      </div>
+      <div className="el-section__body">
+        {fields.map((field: ContentField) => (
+          <FieldRenderer
+            key={field.key}
+            field={field}
+            value={section.content[field.key]}
+            onChange={(value) => handleChange(field.key, value)}
+          />
+        ))}
+      </div>
     </div>
   );
 }

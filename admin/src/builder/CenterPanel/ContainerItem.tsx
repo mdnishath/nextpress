@@ -52,7 +52,12 @@ export function ContainerItem({ section }: ContainerItemProps) {
       section_type: 'container',
       variant_id: '',
       content: {},
-      style: {},
+      style: {
+        paddingTop: '20px',
+        paddingBottom: '20px',
+        paddingLeft: '10px',
+        paddingRight: '10px',
+      },
       layout: { type: 'flex', direction: 'column' },
       sort_order: children.length,
       is_visible: true,
