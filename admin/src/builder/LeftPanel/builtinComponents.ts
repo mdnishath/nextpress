@@ -88,4 +88,129 @@ export const BUILT_IN_COMPONENTS: Component[] = [
     },
     is_container: false,
   },
+
+  // ─── Text Editor ───
+  {
+    id: 0,
+    slug: 'text_editor',
+    name: 'Text Editor',
+    description: 'Rich text with formatting',
+    category: 'basic',
+    icon: 'align-left',
+    content_schema: {
+      fields: [
+        {
+          key: 'content',
+          label: 'Content',
+          type: 'richtext',
+          default: '<p>Add your text here. Click to edit.</p>',
+        },
+      ],
+    },
+    default_content: {
+      content: '<p>Add your text here. Click to edit.</p>',
+    },
+    is_container: false,
+  },
+
+  // ─── Image ───
+  {
+    id: 0,
+    slug: 'image',
+    name: 'Image',
+    description: 'Single image with caption',
+    category: 'basic',
+    icon: 'image',
+    content_schema: {
+      fields: [
+        { key: 'src', label: 'Image', type: 'image', default: '' },
+        { key: 'alt', label: 'Alt Text', type: 'text', default: '', placeholder: 'Describe the image...' },
+        { key: 'caption', label: 'Caption', type: 'text', default: '', placeholder: 'Image caption' },
+        { key: 'link', label: 'Link', type: 'url', default: '', placeholder: 'https://...' },
+        {
+          key: 'alignment',
+          label: 'Alignment',
+          type: 'select',
+          default: 'center',
+          options: [
+            { label: 'Left', value: 'left' },
+            { label: 'Center', value: 'center' },
+            { label: 'Right', value: 'right' },
+          ],
+        },
+      ],
+    },
+    default_content: {
+      src: '',
+      alt: '',
+      caption: '',
+      link: '',
+      alignment: 'center',
+    },
+    is_container: false,
+  },
+
+  // ─── Button ───
+  {
+    id: 0,
+    slug: 'button',
+    name: 'Button',
+    description: 'Call-to-action button',
+    category: 'basic',
+    icon: 'mouse-pointer',
+    content_schema: {
+      fields: [
+        { key: 'text', label: 'Text', type: 'text', default: 'Click Here', placeholder: 'Button text' },
+        { key: 'link', label: 'Link', type: 'url', default: '#', placeholder: 'https://...' },
+        {
+          key: 'alignment',
+          label: 'Alignment',
+          type: 'select',
+          default: 'left',
+          options: [
+            { label: 'Left', value: 'left' },
+            { label: 'Center', value: 'center' },
+            { label: 'Right', value: 'right' },
+          ],
+        },
+        {
+          key: 'size',
+          label: 'Size',
+          type: 'select',
+          default: 'medium',
+          options: [
+            { label: 'Small', value: 'small' },
+            { label: 'Medium', value: 'medium' },
+            { label: 'Large', value: 'large' },
+          ],
+        },
+      ],
+    },
+    default_content: {
+      text: 'Click Here',
+      link: '#',
+      alignment: 'left',
+      size: 'medium',
+    },
+    is_container: false,
+  },
+
+  // ─── Spacer ───
+  {
+    id: 0,
+    slug: 'spacer',
+    name: 'Spacer',
+    description: 'Empty space between elements',
+    category: 'basic',
+    icon: 'minus',
+    content_schema: {
+      fields: [
+        { key: 'height', label: 'Height (px)', type: 'number', default: 40, min: 1, max: 500 },
+      ],
+    },
+    default_content: {
+      height: 40,
+    },
+    is_container: false,
+  },
 ];

@@ -38,7 +38,7 @@ class SectionService
         }
 
         // Validate section type exists (built-in types bypass DB check).
-        $builtinTypes = ['container', 'grid', 'heading'];
+        $builtinTypes = ['container', 'grid', 'heading', 'text_editor', 'image', 'button', 'spacer'];
         if (!in_array($sectionType, $builtinTypes, true)) {
             $component = $this->componentRepo->findBySlug($sectionType);
             if (!$component) {

@@ -176,6 +176,76 @@ function SectionPreview({ section }: { section: Section }) {
     );
   }
 
+  // ── Text Editor ──
+  if (section.section_type === 'text_editor') {
+    const html = str(c.content) || '<p>Add your text here. Click to edit.</p>';
+    return (
+      <div
+        style={{ padding: '8px 0', fontSize: 14, lineHeight: 1.6, color: '#374151' }}
+        dangerouslySetInnerHTML={{ __html: html }}
+      />
+    );
+  }
+
+  // ── Image ──
+  if (section.section_type === 'image') {
+    const src = str(c.src);
+    const alt = str(c.alt) || 'Image';
+    const caption = str(c.caption);
+    const alignment = str(c.alignment) || 'center';
+    return (
+      <div style={{ padding: '8px 0', textAlign: alignment as 'left' | 'center' | 'right' }}>
+        {src ? (
+          <>
+            <img src={src} alt={alt} style={{ maxWidth: '100%', height: 'auto', borderRadius: 4 }} />
+            {caption && <p style={{ fontSize: 12, color: '#6b7280', marginTop: 4 }}>{caption}</p>}
+          </>
+        ) : (
+          <div style={{
+            width: '100%', height: 200, background: '#f3f4f6', borderRadius: 8,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            border: '2px dashed #d1d5db', color: '#9ca3af', fontSize: 13,
+          }}>
+            Click to add image
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // ── Button ──
+  if (section.section_type === 'button') {
+    const text = str(c.text) || 'Click Here';
+    const alignment = str(c.alignment) || 'left';
+    const size = str(c.size) || 'medium';
+    const padding = size === 'small' ? '8px 16px' : size === 'large' ? '16px 32px' : '12px 24px';
+    const fontSize = size === 'small' ? 13 : size === 'large' ? 16 : 14;
+    return (
+      <div style={{ padding: '8px 0', textAlign: alignment as 'left' | 'center' | 'right' }}>
+        <span style={{
+          display: 'inline-block', padding, fontSize, fontWeight: 600,
+          background: '#7c3aed', color: '#fff', borderRadius: 6,
+          cursor: 'default', lineHeight: 1.4,
+        }}>
+          {text}
+        </span>
+      </div>
+    );
+  }
+
+  // ── Spacer ──
+  if (section.section_type === 'spacer') {
+    const height = Number(c.height) || 40;
+    return (
+      <div style={{
+        height, display: 'flex', alignItems: 'center', justifyContent: 'center',
+        border: '1px dashed #e5e7eb', borderRadius: 4, color: '#d1d5db', fontSize: 11,
+      }}>
+        {height}px
+      </div>
+    );
+  }
+
   // ── Default preview ──
   const heading = str(c.heading || c.title || c.headline || c.text);
   const subheading = str(c.subheading || c.subtitle || c.description);

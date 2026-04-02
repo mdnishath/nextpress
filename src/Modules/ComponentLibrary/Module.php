@@ -61,23 +61,36 @@ class Module extends AbstractModule
 
     public function boot(): void
     {
-        // Seed built-in components if none exist
-        global $wpdb;
-        $count = (int) $wpdb->get_var("SELECT COUNT(*) FROM {$wpdb->prefix}npb_components");
-        if ($count === 0) {
-            $this->seedBuiltInComponents();
-        }
+        $this->ensureBuiltInsExist();
     }
 
     /**
-     * Seed only our core built-in components.
+     * Ensure all built-in components exist. Inserts missing ones without touching existing.
      */
-    private function seedBuiltInComponents(): void
+    private function ensureBuiltInsExist(): void
     {
         global $wpdb;
         $table = $wpdb->prefix . 'npb_components';
 
-        $components = [
+        $builtIns = $this->getBuiltInComponents();
+
+        foreach ($builtIns as $comp) {
+            $exists = $wpdb->get_var($wpdb->prepare(
+                "SELECT COUNT(*) FROM {$table} WHERE slug = %s",
+                $comp['slug']
+            ));
+            if (!$exists) {
+                $wpdb->insert($table, $comp);
+            }
+        }
+    }
+
+    /**
+     * All built-in component definitions.
+     */
+    private function getBuiltInComponents(): array
+    {
+        return [
             [
                 'slug' => 'container',
                 'name' => 'Container',
@@ -125,11 +138,101 @@ class Module extends AbstractModule
                     'link' => '',
                 ]),
             ],
+            [
+                'slug' => 'text_editor',
+                'name' => 'Text Editor',
+                'category' => 'basic',
+                'description' => 'Rich text with formatting.',
+                'is_user_created' => 0,
+                'is_active' => 1,
+                'icon' => 'align-left',
+                'content_schema' => json_encode([
+                    'fields' => [
+                        ['key' => 'content', 'label' => 'Content', 'type' => 'richtext', 'default' => '<p>Add your text here. Click to edit.</p>'],
+                    ],
+                ]),
+                'default_content' => json_encode([
+                    'content' => '<p>Add your text here. Click to edit.</p>',
+                ]),
+            ],
+            [
+                'slug' => 'image',
+                'name' => 'Image',
+                'category' => 'basic',
+                'description' => 'Single image with caption.',
+                'is_user_created' => 0,
+                'is_active' => 1,
+                'icon' => 'image',
+                'content_schema' => json_encode([
+                    'fields' => [
+                        ['key' => 'src', 'label' => 'Image', 'type' => 'image', 'default' => ''],
+                        ['key' => 'alt', 'label' => 'Alt Text', 'type' => 'text', 'default' => ''],
+                        ['key' => 'caption', 'label' => 'Caption', 'type' => 'text', 'default' => ''],
+                        ['key' => 'link', 'label' => 'Link', 'type' => 'url', 'default' => ''],
+                        ['key' => 'alignment', 'label' => 'Alignment', 'type' => 'select', 'default' => 'center', 'options' => [
+                            ['label' => 'Left', 'value' => 'left'],
+                            ['label' => 'Center', 'value' => 'center'],
+                            ['label' => 'Right', 'value' => 'right'],
+                        ]],
+                    ],
+                ]),
+                'default_content' => json_encode([
+                    'src' => '',
+                    'alt' => '',
+                    'caption' => '',
+                    'link' => '',
+                    'alignment' => 'center',
+                ]),
+            ],
+            [
+                'slug' => 'button',
+                'name' => 'Button',
+                'category' => 'basic',
+                'description' => 'Call-to-action button.',
+                'is_user_created' => 0,
+                'is_active' => 1,
+                'icon' => 'mouse-pointer',
+                'content_schema' => json_encode([
+                    'fields' => [
+                        ['key' => 'text', 'label' => 'Text', 'type' => 'text', 'default' => 'Click Here'],
+                        ['key' => 'link', 'label' => 'Link', 'type' => 'url', 'default' => '#'],
+                        ['key' => 'alignment', 'label' => 'Alignment', 'type' => 'select', 'default' => 'left', 'options' => [
+                            ['label' => 'Left', 'value' => 'left'],
+                            ['label' => 'Center', 'value' => 'center'],
+                            ['label' => 'Right', 'value' => 'right'],
+                        ]],
+                        ['key' => 'size', 'label' => 'Size', 'type' => 'select', 'default' => 'medium', 'options' => [
+                            ['label' => 'Small', 'value' => 'small'],
+                            ['label' => 'Medium', 'value' => 'medium'],
+                            ['label' => 'Large', 'value' => 'large'],
+                        ]],
+                    ],
+                ]),
+                'default_content' => json_encode([
+                    'text' => 'Click Here',
+                    'link' => '#',
+                    'alignment' => 'left',
+                    'size' => 'medium',
+                ]),
+            ],
+            [
+                'slug' => 'spacer',
+                'name' => 'Spacer',
+                'category' => 'basic',
+                'description' => 'Empty space between elements.',
+                'is_user_created' => 0,
+                'is_active' => 1,
+                'icon' => 'minus',
+                'content_schema' => json_encode([
+                    'fields' => [
+                        ['key' => 'height', 'label' => 'Height (px)', 'type' => 'number', 'default' => 40, 'min' => 1, 'max' => 500],
+                    ],
+                ]),
+                'default_content' => json_encode([
+                    'height' => 40,
+                ]),
+            ],
         ];
-
-        foreach ($components as $comp) {
-            $wpdb->insert($table, $comp);
-        }
     }
 
     public function routes(): array

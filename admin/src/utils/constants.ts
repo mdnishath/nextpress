@@ -31,4 +31,4 @@ export const MAX_NESTING_DEPTH = 5;
 export const CONTAINER_TYPES = ['container'] as const;
 
 /** Built-in section types that bypass DB component check. */
-export const BUILTIN_SECTION_TYPES = ['container', 'heading'] as const;
+export const BUILTIN_SECTION_TYPES = ['container', 'heading', 'text_editor', 'image', 'button', 'spacer'] as const;
