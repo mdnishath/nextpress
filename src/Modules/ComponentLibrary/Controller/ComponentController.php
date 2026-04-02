@@ -6,6 +6,7 @@ namespace NextPressBuilder\Modules\ComponentLibrary\Controller;
 
 use NextPressBuilder\Core\Container;
 use NextPressBuilder\Core\Repository\ComponentRepository;
+use NextPressBuilder\Core\Repository\SectionRepository;
 use NextPressBuilder\Core\Repository\VariantRepository;
 use NextPressBuilder\Core\Rest\AbstractController;
 use WP_REST_Request;
@@ -18,12 +19,14 @@ class ComponentController extends AbstractController
 {
     private ComponentRepository $componentRepo;
     private VariantRepository $variantRepo;
+    private SectionRepository $sectionRepo;
 
     public function __construct(Container $container)
     {
         parent::__construct($container);
         $this->componentRepo = $container->make(ComponentRepository::class);
         $this->variantRepo = $container->make(VariantRepository::class);
+        $this->sectionRepo = $container->make(SectionRepository::class);
     }
 
     /**
@@ -152,6 +155,24 @@ class ComponentController extends AbstractController
     }
 
     /**
+     * GET /npb/v1/components/{slug}/usage — Check how many pages use this component.
+     */
+    public function usage(WP_REST_Request $request): WP_REST_Response
+    {
+        $slug = $request->get_param('slug');
+        $component = $this->componentRepo->findBySlug($slug);
+
+        if (!$component) return $this->notFound('Component not found.');
+
+        $pageCount = $this->sectionRepo->countPagesByType($slug);
+
+        return $this->success([
+            'slug'       => $slug,
+            'page_count' => $pageCount,
+        ]);
+    }
+
+    /**
      * DELETE /npb/v1/components/{id} — Delete user component (admin).
      */
     public function destroy(WP_REST_Request $request): WP_REST_Response
@@ -161,10 +182,9 @@ class ComponentController extends AbstractController
 
         if (!$component) return $this->notFound('Component not found.');
 
-        // Guard removed temporarily — rebuilding from scratch
-        // if (empty($component->is_user_created)) {
-        //     return $this->error('Built-in components cannot be deleted.');
-        // }
+        if (empty($component->is_user_created)) {
+            return $this->error('Built-in components cannot be deleted.');
+        }
 
         $this->componentRepo->delete($id);
         return $this->success(['message' => 'Component deleted.']);

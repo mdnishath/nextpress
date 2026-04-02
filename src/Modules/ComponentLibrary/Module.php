@@ -142,6 +142,7 @@ class Module extends AbstractModule
             ['method'=>'GET','path'=>'/components/(?P<slug>[a-z0-9_-]+)','callback'=>fn($r) => $ctrl()->get($r),'permission'=>'__return_true'],
             ['method'=>'GET','path'=>'/components/(?P<slug>[a-z0-9_-]+)/variants','callback'=>fn($r) => $ctrl()->getVariants($r),'permission'=>'__return_true'],
             // Admin.
+            ['method'=>'GET','path'=>'/components/(?P<slug>[a-z0-9_-]+)/usage','callback'=>fn($r) => $ctrl()->usage($r),'permission'=>fn() => $ctrl()->canManageComponents()],
             ['method'=>'POST','path'=>'/components','callback'=>fn($r) => $ctrl()->store($r),'permission'=>fn() => $ctrl()->canManageComponents()],
             ['method'=>'PUT','path'=>'/components/(?P<id>\d+)','callback'=>fn($r) => $ctrl()->update($r),'permission'=>fn() => $ctrl()->canManageComponents()],
             ['method'=>'POST','path'=>'/components/(?P<id>\d+)/toggle','callback'=>fn($r) => $ctrl()->toggle($r),'permission'=>fn() => $ctrl()->canManageComponents()],

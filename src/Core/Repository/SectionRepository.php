@@ -136,6 +136,15 @@ class SectionRepository extends AbstractRepository
     }
 
     /**
+     * Count distinct pages using a given section type (component slug).
+     */
+    public function countPagesByType(string $sectionType): int
+    {
+        $sql = "SELECT COUNT(DISTINCT page_id) FROM {$this->table} WHERE section_type = %s";
+        return (int) $this->wpdb->get_var($this->wpdb->prepare($sql, $sectionType));
+    }
+
+    /**
      * Delete all sections for a page.
      */
     public function deleteByPage(int $pageId): bool

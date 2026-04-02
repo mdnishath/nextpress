@@ -443,6 +443,15 @@ interface ComponentItem {
   content_schema: unknown;
 }
 
+interface ConfirmDialogState {
+  open: boolean;
+  title: string;
+  message: string;
+  confirmLabel: string;
+  confirmColor: string;
+  onConfirm: (() => void) | null;
+}
+
 function ComponentsPage() {
   const [components, setComponents] = useState<ComponentItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -457,6 +466,9 @@ function ComponentsPage() {
   const [newCategory, setNewCategory] = useState('basic');
   const [newDesc, setNewDesc] = useState('');
   const [creating, setCreating] = useState(false);
+  const [confirmDialog, setConfirmDialog] = useState<ConfirmDialogState>({
+    open: false, title: '', message: '', confirmLabel: 'Confirm', confirmColor: '#ef4444', onConfirm: null,
+  });
 
   const fetchComponents = useCallback(() => {
     setLoading(true);
@@ -473,7 +485,7 @@ function ComponentsPage() {
 
   useEffect(() => { fetchComponents(); }, [fetchComponents]);
 
-  const handleToggle = async (comp: ComponentItem) => {
+  const doToggle = async (comp: ComponentItem) => {
     try {
       await apiPost(`/components/${comp.id}/toggle`, {});
       setComponents((prev) =>
@@ -481,6 +493,31 @@ function ComponentsPage() {
       );
     } catch {
       alert('Failed to toggle');
+    }
+  };
+
+  const handleToggle = async (comp: ComponentItem) => {
+    // If activating, no warning needed
+    if (!comp.is_active) { doToggle(comp); return; }
+    // If deactivating, check usage
+    try {
+      const res = await apiGet<unknown>(`/components/${comp.slug}/usage`);
+      const data = (res as Record<string, unknown>).data as Record<string, unknown> | undefined;
+      const pageCount = Number(data?.page_count ?? 0);
+      if (pageCount > 0) {
+        setConfirmDialog({
+          open: true,
+          title: 'Deactivate Component?',
+          message: `"${comp.name}" is used on ${pageCount} page(s). Deactivating it may break those designs. Continue?`,
+          confirmLabel: 'Deactivate',
+          confirmColor: '#f59e0b',
+          onConfirm: () => doToggle(comp),
+        });
+      } else {
+        doToggle(comp);
+      }
+    } catch {
+      doToggle(comp);
     }
   };
 
@@ -537,13 +574,40 @@ function ComponentsPage() {
     }
   };
 
-  const handleDelete = async (comp: ComponentItem) => {
-    if (!window.confirm(`Delete "${comp.name}"? This cannot be undone.`)) return;
+  const doDelete = async (comp: ComponentItem) => {
     try {
       await apiDelete(`/components/${comp.id}`);
       setComponents((prev) => prev.filter((c) => c.id !== comp.id));
     } catch {
       alert('Failed to delete');
+    }
+  };
+
+  const handleDelete = async (comp: ComponentItem) => {
+    try {
+      const res = await apiGet<unknown>(`/components/${comp.slug}/usage`);
+      const data = (res as Record<string, unknown>).data as Record<string, unknown> | undefined;
+      const pageCount = Number(data?.page_count ?? 0);
+      const warning = pageCount > 0
+        ? `"${comp.name}" is used on ${pageCount} page(s). Deleting it may break those designs.\n\nThis cannot be undone. Continue?`
+        : `Delete "${comp.name}"? This cannot be undone.`;
+      setConfirmDialog({
+        open: true,
+        title: 'Delete Component?',
+        message: warning,
+        confirmLabel: 'Delete',
+        confirmColor: '#ef4444',
+        onConfirm: () => doDelete(comp),
+      });
+    } catch {
+      setConfirmDialog({
+        open: true,
+        title: 'Delete Component?',
+        message: `Delete "${comp.name}"? This cannot be undone.`,
+        confirmLabel: 'Delete',
+        confirmColor: '#ef4444',
+        onConfirm: () => doDelete(comp),
+      });
     }
   };
 
@@ -698,22 +762,65 @@ function ComponentsPage() {
                       >
                         Edit
                       </button>
-                      <button
-                        onClick={() => handleDelete(comp)}
-                        style={{
-                          padding: '5px 12px', background: '#fff', color: '#ef4444',
-                          border: '1px solid #fecaca', borderRadius: 6, fontSize: 12,
-                          fontWeight: 500, cursor: 'pointer',
-                        }}
-                      >
-                        Delete
-                      </button>
+                      {comp.is_user_created === 1 && (
+                        <button
+                          onClick={() => handleDelete(comp)}
+                          style={{
+                            padding: '5px 12px', background: '#fff', color: '#ef4444',
+                            border: '1px solid #fecaca', borderRadius: 6, fontSize: 12,
+                            fontWeight: 500, cursor: 'pointer',
+                          }}
+                        >
+                          Delete
+                        </button>
+                      )}
                     </div>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
+        </div>
+      )}
+
+      {/* Confirm Dialog */}
+      {confirmDialog.open && (
+        <div style={{
+          position: 'fixed', top: 0, right: 0, bottom: 0, left: 0,
+          background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center',
+          zIndex: 100001,
+        }} onClick={() => setConfirmDialog((s) => ({ ...s, open: false }))}>
+          <div style={{
+            background: '#fff', borderRadius: 12, padding: 24, width: 440, maxWidth: '90%',
+            boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
+          }} onClick={(e) => e.stopPropagation()}>
+            <h3 style={{ margin: '0 0 12px', fontSize: 16, fontWeight: 700, color: '#111827' }}>
+              {confirmDialog.title}
+            </h3>
+            <p style={{ margin: '0 0 20px', fontSize: 14, color: '#4b5563', lineHeight: 1.5 }}>
+              {confirmDialog.message}
+            </p>
+            <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
+              <button
+                onClick={() => setConfirmDialog((s) => ({ ...s, open: false }))}
+                style={{
+                  padding: '8px 16px', background: '#f3f4f6', border: 'none',
+                  borderRadius: 6, fontSize: 13, fontWeight: 500, cursor: 'pointer',
+                }}
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => { confirmDialog.onConfirm?.(); setConfirmDialog((s) => ({ ...s, open: false })); }}
+                style={{
+                  padding: '8px 16px', background: confirmDialog.confirmColor, color: '#fff',
+                  border: 'none', borderRadius: 6, fontSize: 13, fontWeight: 600, cursor: 'pointer',
+                }}
+              >
+                {confirmDialog.confirmLabel}
+              </button>
+            </div>
+          </div>
         </div>
       )}
 
