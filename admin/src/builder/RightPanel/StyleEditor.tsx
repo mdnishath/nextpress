@@ -1,10 +1,11 @@
 import { useState, useCallback } from '@wordpress/element';
-import { Paintbrush, Image as ImageIcon, Film, Ban, Link2, Unlink2, Pencil, AlignLeft, AlignCenter, AlignRight, AlignJustify } from 'lucide-react';
+import { Paintbrush, Image as ImageIcon, Film, Ban, Link2, Unlink2 } from 'lucide-react';
 import { useBuilderStore } from '../../store/builderStore';
 import { getValueForBreakpoint } from '../../utils/responsive';
 import { parseValueWithUnit, formatValueWithUnit } from './controls/UnitSwitcher';
 import { MediaPicker } from './controls/MediaPicker';
 import { CONTAINER_TYPES } from '../../utils/constants';
+import { SectionHeader, HoverTabBar, TypographySection } from './controls/SharedStyleControls';
 import type { Section, SectionStyle } from '../../types/builder';
 
 interface StyleEditorProps {
@@ -12,34 +13,6 @@ interface StyleEditorProps {
 }
 
 type BgType = 'none' | 'classic' | 'gradient' | 'image';
-
-// ─── Shared sub-components ───
-
-function SectionHeader({ title, open, onToggle }: { title: string; open: boolean; onToggle: () => void }) {
-  return (
-    <button type="button" className="el-section__header el-section__header--collapsible" onClick={onToggle}>
-      <span className="el-section__arrow">{open ? '▼' : '▶'}</span>
-      <span className="el-section__title">{title}</span>
-    </button>
-  );
-}
-
-function HoverTabBar({ active, onChange }: { active: 'normal' | 'hover'; onChange: (t: 'normal' | 'hover') => void }) {
-  return (
-    <div className="el-hover-tabs">
-      <button
-        type="button"
-        className={`el-hover-tabs__btn ${active === 'normal' ? 'el-hover-tabs__btn--active' : ''}`}
-        onClick={() => onChange('normal')}
-      >Normal</button>
-      <button
-        type="button"
-        className={`el-hover-tabs__btn ${active === 'hover' ? 'el-hover-tabs__btn--active' : ''}`}
-        onClick={() => onChange('hover')}
-      >Hover</button>
-    </div>
-  );
-}
 
 /** Parse gradient string into components */
 function parseGradient(val: string) {
@@ -231,8 +204,6 @@ export function StyleEditor({ section }: StyleEditorProps) {
 
   // State
   const isContainer = CONTAINER_TYPES.includes(section.section_type as typeof CONTAINER_TYPES[number]);
-  const [typoOpen, setTypoOpen] = useState(!isContainer);
-  const [typoHover, setTypoHover] = useState<'normal' | 'hover'>('normal');
   const [bgOpen, setBgOpen] = useState(true);
   const [overlayOpen, setOverlayOpen] = useState(false);
   const [borderOpen, setBorderOpen] = useState(false);
@@ -256,119 +227,8 @@ export function StyleEditor({ section }: StyleEditorProps) {
 
   return (
     <div>
-      {/* ▼ Typography (non-containers only) */}
-      {!isContainer && (
-        <div className="el-section">
-          <SectionHeader title="Typography" open={typoOpen} onToggle={() => setTypoOpen(!typoOpen)} />
-          {typoOpen && (
-            <div className="el-section__body">
-              {/* Alignment */}
-              <div className="el-control el-control--row">
-                <span className="el-control__label">Alignment</span>
-                <div className="el-icon-group">
-                  {[
-                    { val: 'left', icon: <AlignLeft size={14} />, tip: 'Left' },
-                    { val: 'center', icon: <AlignCenter size={14} />, tip: 'Center' },
-                    { val: 'right', icon: <AlignRight size={14} />, tip: 'Right' },
-                    { val: 'justify', icon: <AlignJustify size={14} />, tip: 'Justify' },
-                  ].map((o) => (
-                    <button
-                      key={o.val}
-                      type="button"
-                      className={`el-icon-group__btn ${getStyle('textAlign') === o.val ? 'el-icon-group__btn--active' : ''}`}
-                      onClick={() => handleChange({ textAlign: o.val })}
-                      title={o.tip}
-                    >
-                      {o.icon}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Font Family */}
-              <div className="el-control el-control--row">
-                <span className="el-control__label">Font Family</span>
-                <input
-                  className="el-input"
-                  style={{ width: 140 }}
-                  value={getStyle('fontFamily')}
-                  onChange={(e) => handleChange({ fontFamily: e.target.value })}
-                  placeholder="Default"
-                />
-              </div>
-
-              {/* Font Size */}
-              <div className="el-control el-control--row">
-                <span className="el-control__label">Size</span>
-                <input
-                  className="el-input"
-                  style={{ width: 80 }}
-                  value={getStyle('fontSize')}
-                  onChange={(e) => handleChange({ fontSize: e.target.value })}
-                  placeholder="16px"
-                />
-              </div>
-
-              {/* Font Weight */}
-              <div className="el-control el-control--row">
-                <span className="el-control__label">Weight</span>
-                <select
-                  className="el-select"
-                  value={getStyle('fontWeight') || ''}
-                  onChange={(e) => handleChange({ fontWeight: e.target.value })}
-                >
-                  <option value="">Default</option>
-                  <option value="100">100 - Thin</option>
-                  <option value="200">200 - Extra Light</option>
-                  <option value="300">300 - Light</option>
-                  <option value="400">400 - Normal</option>
-                  <option value="500">500 - Medium</option>
-                  <option value="600">600 - Semi Bold</option>
-                  <option value="700">700 - Bold</option>
-                  <option value="800">800 - Extra Bold</option>
-                  <option value="900">900 - Black</option>
-                </select>
-              </div>
-
-              {/* Line Height */}
-              <div className="el-control el-control--row">
-                <span className="el-control__label">Line Height</span>
-                <input
-                  className="el-input"
-                  style={{ width: 80 }}
-                  value={getStyle('lineHeight')}
-                  onChange={(e) => handleChange({ lineHeight: e.target.value })}
-                  placeholder="1.5"
-                />
-              </div>
-
-              {/* Normal / Hover tabs */}
-              <HoverTabBar active={typoHover} onChange={setTypoHover} />
-
-              {/* Text Color */}
-              <div className="el-control el-control--row" style={{ marginTop: 12 }}>
-                <span className="el-control__label">Text Color</span>
-                <div className="el-color-input">
-                  <div
-                    className="el-color-input__swatch"
-                    style={{ background: typoHover === 'normal' ? getStyle('textColor') || '' : getStyle('hoverColor') || '' }}
-                  >
-                    <input
-                      type="color"
-                      value={(typoHover === 'normal' ? getStyle('textColor') : getStyle('hoverColor')) || '#000000'}
-                      onChange={(e) => {
-                        if (typoHover === 'normal') handleChange({ textColor: e.target.value });
-                        else handleChange({ hoverColor: e.target.value });
-                      }}
-                      className="el-color-input__native"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-      )}
+      {/* ▼ Typography (non-containers only) — uses shared TypographySection */}
+      {!isContainer && <TypographySection section={section} title="Typography" />}
 
       {/* ▼ Background */}
       <div className="el-section">

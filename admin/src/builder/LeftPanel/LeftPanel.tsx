@@ -1,3 +1,4 @@
+import type { ComponentType } from 'react';
 import { ChevronLeft, ChevronRight, LayoutGrid, Pencil, Contrast, Settings } from 'lucide-react';
 import { useBuilderStore } from '../../store/builderStore';
 import { useUIStore } from '../../store/uiStore';
@@ -10,8 +11,26 @@ import { TextEditorContentEditor, TextEditorStyleEditor } from '../RightPanel/ed
 import { StyleEditor } from '../RightPanel/StyleEditor';
 import { AdvancedEditor } from '../RightPanel/AdvancedEditor';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
+import type { Section } from '../../types/builder';
 
 type EditTab = 'content' | 'style' | 'advanced';
+
+/**
+ * Component editor registry — maps section_type to specialized editors.
+ * Add new component editors here. Fallback: ContentEditor (content), StyleEditor (style).
+ */
+const EDITOR_MAP: Record<string, {
+  content?: ComponentType<{ section: Section }>;
+  style?: ComponentType<{ section: Section }>;
+}> = {
+  container: { content: ContainerContentEditor },
+  heading:   { content: HeadingContentEditor, style: HeadingStyleEditor },
+  text_editor: { content: TextEditorContentEditor, style: TextEditorStyleEditor },
+};
+
+function getEditor(sectionType: string, tab: 'content' | 'style'): ComponentType<{ section: Section }> {
+  return EDITOR_MAP[sectionType]?.[tab] || (tab === 'content' ? ContentEditor : StyleEditor);
+}
 
 function getEditTabs(isContainer: boolean): { key: EditTab; label: string; Icon: typeof LayoutGrid }[] {
   return [
@@ -88,22 +107,8 @@ export function LeftPanel() {
           {/* Tab Content */}
           <div className="npb-edit-content">
             <ErrorBoundary name={`Editor:${rightTab}`}>
-              {rightTab === 'content' && (
-                isContainer
-                  ? <ContainerContentEditor section={section} />
-                  : section.section_type === 'heading'
-                    ? <HeadingContentEditor section={section} />
-                    : section.section_type === 'text_editor'
-                      ? <TextEditorContentEditor section={section} />
-                      : <ContentEditor section={section} />
-              )}
-              {rightTab === 'style' && (
-                section.section_type === 'heading'
-                  ? <HeadingStyleEditor section={section} />
-                  : section.section_type === 'text_editor'
-                    ? <TextEditorStyleEditor section={section} />
-                    : <StyleEditor section={section} />
-              )}
+              {rightTab === 'content' && (() => { const C = getEditor(section.section_type, 'content'); return <C section={section} />; })()}
+              {rightTab === 'style' && (() => { const C = getEditor(section.section_type, 'style'); return <C section={section} />; })()}
               {rightTab === 'advanced' && <AdvancedEditor section={section} />}
             </ErrorBoundary>
           </div>
