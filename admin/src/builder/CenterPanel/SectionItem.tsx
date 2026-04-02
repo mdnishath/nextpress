@@ -102,7 +102,16 @@ export function SectionItem({ section }: SectionItemProps) {
       {/* Section label + controls (hidden in preview mode) */}
       {!previewMode && (
         <>
-          <div className="npb-section-item__label">{sectionLabel}</div>
+          <div
+            className="npb-section-item__label"
+            {...listeners}
+            {...attributes}
+            style={{ cursor: 'grab' }}
+            title="Drag to move"
+          >
+            <GripVertical size={10} style={{ marginRight: 2, opacity: 0.6 }} />
+            {sectionLabel}
+          </div>
           <div className="npb-section-item__controls">
             <button
               className="npb-section-control-btn"

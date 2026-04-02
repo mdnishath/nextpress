@@ -1,5 +1,5 @@
 import type { ComponentType } from 'react';
-import { ChevronLeft, ChevronRight, LayoutGrid, Pencil, Contrast, Settings } from 'lucide-react';
+import { ChevronLeft, ChevronRight, LayoutGrid, Pencil, Contrast, Settings, ArrowLeft } from 'lucide-react';
 import { useBuilderStore } from '../../store/builderStore';
 import { useUIStore } from '../../store/uiStore';
 import { ComponentPalette } from './ComponentPalette';
@@ -44,6 +44,7 @@ export function LeftPanel() {
   const { leftPanelOpen, leftTab, setLeftTab, rightTab, setRightTab, toggleLeftPanel } = useUIStore();
   const { selectedSectionId, getSection } = useBuilderStore();
 
+  const { selectSection } = useBuilderStore();
   const section = selectedSectionId ? getSection(selectedSectionId) : undefined;
   const isEditing = !!section;
   const isContainer = section?.section_type === 'container';
@@ -79,9 +80,22 @@ export function LeftPanel() {
       {isEditing ? (
         /* ─── EDIT MODE: show section editor ─── */
         <>
-          {/* Header */}
-          <div className="npb-edit-header">
-            <span className="npb-edit-header__title">
+          {/* Header with back button */}
+          <div className="npb-edit-header" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <button
+              type="button"
+              onClick={() => selectSection(null)}
+              title="Back to components"
+              style={{
+                background: 'none', border: 'none', color: '#a1a1aa', cursor: 'pointer',
+                padding: 4, borderRadius: 4, display: 'flex', alignItems: 'center',
+              }}
+              onMouseEnter={(e) => { (e.target as HTMLElement).style.color = '#fff'; }}
+              onMouseLeave={(e) => { (e.target as HTMLElement).style.color = '#a1a1aa'; }}
+            >
+              <ArrowLeft size={16} />
+            </button>
+            <span className="npb-edit-header__title" style={{ flex: 1 }}>
               Edit {section.section_type.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())}
             </span>
           </div>
