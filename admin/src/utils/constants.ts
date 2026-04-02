@@ -83,9 +83,22 @@ export function getDefaultStyle(sectionType: string, content?: Record<string, un
         borderRadius: '6px',
       };
     case 'spacer':
-      return {};
+      return {
+        paddingTop: '0px',
+        paddingBottom: '0px',
+        paddingLeft: '0px',
+        paddingRight: '0px',
+        marginTop: '0px',
+        marginBottom: '0px',
+      };
     case 'image':
-      return {};
+      return {
+        paddingTop: '0px',
+        paddingBottom: '0px',
+        paddingLeft: '0px',
+        paddingRight: '0px',
+        width: '100%',
+      };
     default:
       return {};
   }
