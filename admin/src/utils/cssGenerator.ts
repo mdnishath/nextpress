@@ -67,7 +67,7 @@ const SKIP_STYLE_KEYS = new Set([
   // Flex child (handled by flexSize switch)
   'flexSize', 'flexGrow', 'flexShrink', 'flexBasis',
   // Hover state keys (handled separately)
-  'hoverBackgroundColor', 'hoverBackgroundGradient', 'hoverBackgroundImage', 'hoverBorderColor',
+  'hoverBackgroundColor', 'hoverBackgroundGradient', 'hoverBackgroundImage', 'hoverBorderColor', 'hoverColor',
 ]);
 
 /**

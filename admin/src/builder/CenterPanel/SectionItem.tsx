@@ -176,15 +176,11 @@ function SectionPreview({ section }: { section: Section }) {
     );
   }
 
-  // ── Text Editor ──
+  // ── Text Editor — no inline styles, CSS generator handles everything ──
   if (section.section_type === 'text_editor') {
     const html = str(c.content) || '<p>Add your text here. Click to edit.</p>';
-    const alignment = str(c.alignment) || 'left';
     return (
-      <div
-        style={{ padding: '8px 0', fontSize: 14, lineHeight: 1.6, color: '#374151', textAlign: alignment as 'left' | 'center' | 'right' }}
-        dangerouslySetInnerHTML={{ __html: html }}
-      />
+      <div dangerouslySetInnerHTML={{ __html: html }} />
     );
   }
 
@@ -214,18 +210,27 @@ function SectionPreview({ section }: { section: Section }) {
     );
   }
 
-  // ── Button ──
+  // ── Button — minimal inline, rest from CSS generator ──
   if (section.section_type === 'button') {
     const text = str(c.text) || 'Click Here';
     const alignment = str(c.alignment) || 'left';
     const size = str(c.size) || 'medium';
-    const padding = size === 'small' ? '8px 16px' : size === 'large' ? '16px 32px' : '12px 24px';
-    const fontSize = size === 'small' ? 13 : size === 'large' ? 16 : 14;
+    const sizePad = size === 'small' ? '8px 16px' : size === 'large' ? '16px 32px' : '12px 24px';
+    const sizeFontFallback = size === 'small' ? 13 : size === 'large' ? 16 : 14;
+    const hasCustomBg = !!section.style.backgroundColor;
+    const hasCustomColor = !!section.style.textColor;
+    const hasCustomSize = !!section.style.fontSize;
+    const hasCustomPad = !!section.style.paddingTop;
     return (
-      <div style={{ padding: '8px 0', textAlign: alignment as 'left' | 'center' | 'right' }}>
+      <div style={{ textAlign: alignment as 'left' | 'center' | 'right' }}>
         <span style={{
-          display: 'inline-block', padding, fontSize, fontWeight: 600,
-          background: '#7c3aed', color: '#fff', borderRadius: 6,
+          display: 'inline-block',
+          padding: hasCustomPad ? undefined : sizePad,
+          fontSize: hasCustomSize ? undefined : sizeFontFallback,
+          fontWeight: 600,
+          background: hasCustomBg ? undefined : '#7c3aed',
+          color: hasCustomColor ? undefined : '#fff',
+          borderRadius: 6,
           cursor: 'default', lineHeight: 1.4,
         }}>
           {text}
