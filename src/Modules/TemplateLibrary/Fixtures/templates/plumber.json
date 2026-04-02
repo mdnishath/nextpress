@@ -1,0 +1,300 @@
+{
+  "slug": "plumber",
+  "name": "Professional Plumber",
+  "business_type": "plumber",
+  "description": "Complete website for plumbing services. Includes emergency service, service areas, and quick quote form.",
+  "data": {
+    "theme": {
+      "slug": "plumber-theme",
+      "name": "Plumber Theme",
+      "colors": {
+        "primary": {"value": "#1E56A0", "label": "Primary"},
+        "primary-dark": {"value": "#143D73", "label": "Primary Dark"},
+        "primary-light": {"value": "#4A85C9", "label": "Primary Light"},
+        "accent": {"value": "#F6B93B", "label": "Accent"},
+        "accent-dark": {"value": "#D4991F", "label": "Accent Dark"},
+        "dark": {"value": "#1A202C", "label": "Dark"},
+        "secondary": {"value": "#2D3748", "label": "Secondary"},
+        "gray-50": "#F9FAFB", "gray-100": "#F3F4F6", "gray-200": "#E5E7EB",
+        "gray-300": "#D1D5DB", "gray-400": "#9CA3AF", "gray-500": "#6B7280",
+        "gray-600": "#4B5563", "gray-700": "#374151", "gray-800": "#1F2937", "gray-900": "#111827",
+        "success": "#10B981", "warning": "#F59E0B", "error": "#EF4444", "info": "#3B82F6",
+        "white": "#FFFFFF", "black": "#000000"
+      },
+      "typography": {
+        "heading": {"family": "Montserrat", "source": "google", "weights": [600, 700, 800], "fallback": "system-ui, sans-serif"},
+        "body": {"family": "Open Sans", "source": "google", "weights": [400, 500, 600], "fallback": "system-ui, sans-serif"},
+        "mono": {"family": "JetBrains Mono", "source": "google", "weights": [400], "fallback": "monospace"},
+        "scale": {"xs": {"size": "12px", "lineHeight": "16px"}, "sm": {"size": "14px", "lineHeight": "20px"}, "base": {"size": "16px", "lineHeight": "24px"}, "lg": {"size": "18px", "lineHeight": "28px"}, "xl": {"size": "20px", "lineHeight": "28px"}, "2xl": {"size": "24px", "lineHeight": "32px"}, "3xl": {"size": "30px", "lineHeight": "36px"}, "4xl": {"size": "36px", "lineHeight": "40px"}, "5xl": {"size": "48px", "lineHeight": "1"}, "6xl": {"size": "60px", "lineHeight": "1"}}
+      },
+      "spacing": {"base": 4, "scale": {"0":"0px","1":"4px","2":"8px","3":"12px","4":"16px","5":"20px","6":"24px","8":"32px","10":"40px","12":"48px","16":"64px","20":"80px","24":"96px"}, "containerMaxWidth": "1280px", "containerPadding": {"mobile":"16px","tablet":"24px","desktop":"32px"}},
+      "buttons": {},
+      "borders": {"sm":"4px","md":"8px","lg":"12px","xl":"16px","full":"9999px"},
+      "shadows": {"sm":"0 1px 2px rgba(0,0,0,0.05)","md":"0 4px 6px rgba(0,0,0,0.07)","lg":"0 10px 15px rgba(0,0,0,0.1)","xl":"0 20px 25px rgba(0,0,0,0.1)"},
+      "dark_mode": {"enabled": true, "toggle": "system", "colors": {"primary":"#4A85C9","dark":"#F9FAFB","secondary":"#E5E7EB","white":"#0F172A","black":"#FFFFFF"}}
+    },
+    "navigation": [
+      {
+        "slug": "main",
+        "name": "Main Navigation",
+        "location": "header",
+        "items": [
+          {"id": "n1", "type": "page_link", "label": "Home", "url": "/", "target": "_self", "icon": "", "badge": "", "nofollow": false, "cssClass": "", "children": []},
+          {"id": "n2", "type": "page_link", "label": "Services", "url": "/services", "target": "_self", "icon": "", "badge": "", "nofollow": false, "cssClass": "", "children": [
+            {"id": "n2a", "type": "page_link", "label": "Emergency Plumbing", "url": "/emergency", "target": "_self", "icon": "", "badge": "24/7", "nofollow": false, "cssClass": "", "children": []},
+            {"id": "n2b", "type": "page_link", "label": "Drain Cleaning", "url": "/services", "target": "_self", "icon": "", "badge": "", "nofollow": false, "cssClass": "", "children": []}
+          ]},
+          {"id": "n3", "type": "page_link", "label": "About", "url": "/about", "target": "_self", "icon": "", "badge": "", "nofollow": false, "cssClass": "", "children": []},
+          {"id": "n4", "type": "page_link", "label": "Contact", "url": "/contact", "target": "_self", "icon": "", "badge": "", "nofollow": false, "cssClass": "", "children": []}
+        ],
+        "settings": {"sticky": true}
+      },
+      {
+        "slug": "footer",
+        "name": "Footer Links",
+        "location": "footer",
+        "items": [
+          {"id": "f1", "type": "page_link", "label": "Home", "url": "/", "target": "_self", "icon": "", "badge": "", "nofollow": false, "cssClass": "", "children": []},
+          {"id": "f2", "type": "page_link", "label": "Services", "url": "/services", "target": "_self", "icon": "", "badge": "", "nofollow": false, "cssClass": "", "children": []},
+          {"id": "f3", "type": "page_link", "label": "About", "url": "/about", "target": "_self", "icon": "", "badge": "", "nofollow": false, "cssClass": "", "children": []},
+          {"id": "f4", "type": "page_link", "label": "Contact", "url": "/contact", "target": "_self", "icon": "", "badge": "", "nofollow": false, "cssClass": "", "children": []}
+        ],
+        "settings": {}
+      }
+    ],
+    "forms": [
+      {
+        "slug": "contact",
+        "name": "Contact Form",
+        "fields": [
+          {"key": "full_name", "type": "text", "label": "Full Name", "required": true, "width": "50%"},
+          {"key": "email", "type": "email", "label": "Email", "required": true, "width": "50%"},
+          {"key": "phone", "type": "phone", "label": "Phone", "required": true, "width": "50%"},
+          {"key": "service", "type": "select", "label": "Service Needed", "required": false, "width": "50%", "options": ["Emergency Plumbing", "Drain Cleaning", "Water Heater", "Pipe Repair", "Bathroom Remodel", "Other"]},
+          {"key": "message", "type": "textarea", "label": "Describe Your Issue", "required": true}
+        ],
+        "settings": {
+          "success_message": "Thank you! We'll contact you within 30 minutes.",
+          "submit_button": "Get Free Estimate",
+          "notifications": {
+            "admin": {"enabled": true, "to": ["{email}"], "subject": "New plumbing request from {field:full_name}", "reply_to": "{field:email}"},
+            "user_confirmation": {"enabled": true, "to": "{field:email}", "subject": "We received your request — {business_name}"}
+          },
+          "spam_protection": {"min_submit_time": 3, "max_submissions_per_hour": 10}
+        }
+      }
+    ],
+    "pages": [
+      {
+        "slug": "home",
+        "title": "Home",
+        "page_type": "page",
+        "seo_title": "{business_name} | Professional Plumbing Services in {city}",
+        "seo_description": "Licensed & insured plumber in {city}. 24/7 emergency service, drain cleaning, water heater repair. Call {phone} for a free estimate.",
+        "schema_type": "Plumber",
+        "sections": [
+          {
+            "section_type": "hero",
+            "variant_id": "variant-01",
+            "content": {
+              "badge": "Licensed & Insured Plumber in {city}",
+              "heading": "Your Trusted Local Plumber",
+              "subtitle": "Fast, Reliable Plumbing Service",
+              "description": "24/7 emergency plumbing, drain cleaning, water heater repair, and more. Serving {city} and surrounding areas for over 15 years.",
+              "cta_primary_text": "Get Free Estimate",
+              "cta_primary_link": "/contact",
+              "cta_secondary_text": "Call {phone}",
+              "cta_secondary_link": "tel:{phone}",
+              "badges": [
+                {"text": "Licensed & Insured"},
+                {"text": "24/7 Emergency"},
+                {"text": "15+ Years Experience"},
+                {"text": "Free Estimates"}
+              ]
+            },
+            "style": {"bgOverlayColor": "#0a1628", "bgOverlayOpacity": 70}
+          },
+          {
+            "section_type": "services_grid",
+            "variant_id": "variant-01",
+            "content": {
+              "heading": "Our Plumbing Services",
+              "subtitle": "What We Do",
+              "columns": "3",
+              "items": [
+                {"title": "Emergency Plumbing", "description": "Burst pipes, overflows, gas leaks — we're available 24/7 for emergencies. Fast response within 30 minutes.", "icon": "alert-triangle"},
+                {"title": "Drain Cleaning", "description": "Clogged drains, slow pipes, sewer backup. We use professional equipment to clear any blockage.", "icon": "droplets"},
+                {"title": "Water Heater Repair", "description": "Tank and tankless water heater installation, repair, and maintenance. Same-day service available.", "icon": "flame"},
+                {"title": "Pipe Repair & Replacement", "description": "Leaky pipes, corroded lines, repiping. We fix it right the first time with quality materials.", "icon": "wrench"},
+                {"title": "Bathroom Remodeling", "description": "Complete bathroom plumbing for renovations. Fixtures, showers, tubs, and more.", "icon": "bath"},
+                {"title": "Sewer Line Service", "description": "Video inspection, trenchless repair, and sewer line replacement with minimal disruption.", "icon": "construction"}
+              ]
+            }
+          },
+          {
+            "section_type": "stats_counter",
+            "variant_id": "variant-01",
+            "content": {
+              "items": [
+                {"number": "500", "suffix": "+", "label": "Happy Customers"},
+                {"number": "15", "suffix": "+", "label": "Years Experience"},
+                {"number": "24", "suffix": "/7", "label": "Emergency Service"},
+                {"number": "100", "suffix": "%", "label": "Satisfaction Rate"}
+              ]
+            }
+          },
+          {
+            "section_type": "testimonials",
+            "variant_id": "variant-02",
+            "content": {
+              "heading": "What Our Customers Say",
+              "subtitle": "Trusted by Homeowners in {city}",
+              "items": [
+                {"name": "Sarah M.", "role": "Homeowner", "rating": 5, "quote": "Called at 2 AM for a burst pipe. They were here in 20 minutes and fixed it fast. Lifesaver!"},
+                {"name": "James R.", "role": "Property Manager", "rating": 5, "quote": "I use {business_name} for all my rental properties. Reliable, fair pricing, and quality work every time."},
+                {"name": "Linda K.", "role": "Homeowner", "rating": 5, "quote": "Best plumber in {city}! They replaced our old water heater same-day. Very professional and clean."}
+              ]
+            }
+          },
+          {
+            "section_type": "cta_banner",
+            "variant_id": "variant-01",
+            "content": {
+              "heading": "Need a Plumber? Call Now!",
+              "description": "Available 24/7 for emergencies. Free estimates on all services. Licensed & insured.",
+              "cta_text": "Get Free Estimate",
+              "cta_link": "/contact",
+              "cta_secondary_text": "Call {phone}",
+              "cta_secondary_link": "tel:{phone}"
+            }
+          },
+          {
+            "section_type": "faq",
+            "variant_id": "variant-01",
+            "content": {
+              "heading": "Frequently Asked Questions",
+              "items": [
+                {"question": "Do you offer 24/7 emergency service?", "answer": "Yes! We're available 24 hours a day, 7 days a week for plumbing emergencies. Call {phone} anytime."},
+                {"question": "How much does a plumber cost?", "answer": "Our rates are competitive and transparent. We provide free estimates before starting any work, so you know the cost upfront."},
+                {"question": "Are you licensed and insured?", "answer": "Absolutely. We are fully licensed, bonded, and insured for your protection."},
+                {"question": "What areas do you serve?", "answer": "We serve {city} and surrounding areas within a 30-mile radius."},
+                {"question": "Do you offer financing?", "answer": "Yes, we offer flexible financing options for larger projects. Ask us about our payment plans."}
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "slug": "services",
+        "title": "Our Services",
+        "page_type": "page",
+        "seo_title": "Plumbing Services | {business_name}",
+        "seo_description": "Full range of plumbing services in {city}. Emergency plumbing, drain cleaning, water heater repair, pipe repair, bathroom remodeling.",
+        "sections": [
+          {
+            "section_type": "hero",
+            "variant_id": "variant-01",
+            "content": {
+              "heading": "Our Plumbing Services",
+              "subtitle": "Professional Solutions for Every Need",
+              "description": "From emergency repairs to bathroom remodels, we handle it all with expertise and care.",
+              "cta_primary_text": "Get Free Estimate",
+              "cta_primary_link": "/contact"
+            },
+            "style": {"bgOverlayColor": "#1E56A0", "bgOverlayOpacity": 90}
+          },
+          {
+            "section_type": "services_grid",
+            "variant_id": "variant-01",
+            "content": {
+              "heading": "What We Offer",
+              "columns": "3",
+              "items": [
+                {"title": "Emergency Plumbing", "description": "24/7 emergency response. Burst pipes, gas leaks, overflows handled fast."},
+                {"title": "Drain Cleaning", "description": "Professional drain cleaning using hydro-jetting and snake equipment."},
+                {"title": "Water Heater Services", "description": "Installation, repair, and maintenance of tank and tankless water heaters."},
+                {"title": "Pipe Repair", "description": "Expert pipe repair and replacement using quality materials."},
+                {"title": "Bathroom Remodeling", "description": "Complete plumbing services for your bathroom renovation project."},
+                {"title": "Sewer Line Services", "description": "Video inspection, repair, and replacement of sewer lines."}
+              ]
+            }
+          },
+          {
+            "section_type": "cta_banner",
+            "variant_id": "variant-01",
+            "content": {
+              "heading": "Ready to Get Started?",
+              "description": "Contact us today for a free, no-obligation estimate.",
+              "cta_text": "Contact Us",
+              "cta_link": "/contact"
+            }
+          }
+        ]
+      },
+      {
+        "slug": "about",
+        "title": "About Us",
+        "page_type": "page",
+        "seo_title": "About {business_name} | Licensed Plumber in {city}",
+        "sections": [
+          {
+            "section_type": "hero",
+            "variant_id": "variant-01",
+            "content": {
+              "heading": "About {business_name}",
+              "subtitle": "Serving {city} Since 2010",
+              "description": "Family-owned and operated. We take pride in delivering honest, reliable plumbing services to our community."
+            },
+            "style": {"bgOverlayColor": "#1E56A0", "bgOverlayOpacity": 90}
+          },
+          {
+            "section_type": "rich_text",
+            "variant_id": "variant-01",
+            "content": {
+              "content": "<h2>Our Story</h2><p>{business_name} was founded with one simple mission: provide honest, reliable plumbing services at fair prices. For over 15 years, we've been serving {city} homeowners and businesses with the same dedication and quality craftsmanship.</p><p>Every technician on our team is licensed, insured, and committed to doing the job right the first time. We treat your home like our own.</p>",
+              "max_width": "lg"
+            }
+          },
+          {
+            "section_type": "stats_counter",
+            "variant_id": "variant-01",
+            "content": {
+              "items": [
+                {"number": "15", "suffix": "+", "label": "Years in Business"},
+                {"number": "500", "suffix": "+", "label": "Happy Clients"},
+                {"number": "5", "suffix": "★", "label": "Google Rating"},
+                {"number": "30", "suffix": "min", "label": "Avg Response Time"}
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "slug": "contact",
+        "title": "Contact Us",
+        "page_type": "page",
+        "seo_title": "Contact {business_name} | Free Plumbing Estimate",
+        "sections": [
+          {
+            "section_type": "hero",
+            "variant_id": "variant-01",
+            "content": {
+              "heading": "Contact Us",
+              "subtitle": "Get Your Free Estimate Today",
+              "description": "Call {phone} or fill out the form below. We respond within 30 minutes."
+            },
+            "style": {"bgOverlayColor": "#1E56A0", "bgOverlayOpacity": 90}
+          },
+          {
+            "section_type": "rich_text",
+            "variant_id": "variant-01",
+            "content": {
+              "content": "<div style='text-align:center;padding:40px 0'><h2>Get in Touch</h2><p style='font-size:18px'>Call us: <strong>{phone}</strong></p><p>Email: <strong>{email}</strong></p><p>{address}, {city}, {state} {zip}</p><p style='margin-top:20px'><em>We offer free estimates and 24/7 emergency service.</em></p></div>",
+              "max_width": "md"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
