@@ -83,6 +83,7 @@ const ALWAYS_RESPONSIVE_KEYS = new Set([
   'width', 'maxWidth', 'minHeight',
   'borderWidth', 'borderRadius',
   'alignSelf',
+  'textAlign', 'textColor', 'fontWeight', 'fontStyle', 'textDecoration', 'textTransform',
 ]);
 
 // ─── Public API ─────────────────────────────────────────────────────

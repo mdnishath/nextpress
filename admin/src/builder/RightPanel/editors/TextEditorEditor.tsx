@@ -15,9 +15,35 @@ export function TextEditorContentEditor({ section }: { section: Section }) {
   const { updateContent } = useBuilderStore();
   const c = section.content as Record<string, string>;
   const [showHtml, setShowHtml] = useState(false);
+  const [htmlText, setHtmlText] = useState(c.content || '');
+  const editorRef = useRef<HTMLDivElement>(null);
+  const initializedRef = useRef(false);
+
+  // Set initial content only once
+  useEffect(() => {
+    if (editorRef.current && !initializedRef.current) {
+      editorRef.current.innerHTML = c.content || '<p>Add your text here. Click to edit.</p>';
+      initializedRef.current = true;
+    }
+  }, []);
+
+  // Sync HTML textarea when switching modes
+  useEffect(() => {
+    if (showHtml) {
+      setHtmlText(c.content || '');
+    } else if (editorRef.current) {
+      editorRef.current.innerHTML = c.content || '<p>Add your text here. Click to edit.</p>';
+    }
+  }, [showHtml]);
 
   const update = (key: string, val: string) => {
     updateContent(section.id, { [key]: val });
+  };
+
+  const handleInput = () => {
+    if (editorRef.current) {
+      update('content', editorRef.current.innerHTML);
+    }
   };
 
   return (
@@ -42,8 +68,11 @@ export function TextEditorContentEditor({ section }: { section: Section }) {
             <textarea
               className="el-textarea"
               rows={8}
-              value={c.content || ''}
-              onChange={(e) => update('content', e.target.value)}
+              value={htmlText}
+              onChange={(e) => {
+                setHtmlText(e.target.value);
+                update('content', e.target.value);
+              }}
               style={{ fontFamily: 'var(--npb-font-mono)', fontSize: 12 }}
             />
           ) : (
@@ -62,7 +91,14 @@ export function TextEditorContentEditor({ section }: { section: Section }) {
                 ].map((btn) => (
                   <button
                     key={btn.cmd}
-                    onMouseDown={(e) => { e.preventDefault(); document.execCommand(btn.cmd); }}
+                    onMouseDown={(e) => {
+                      e.preventDefault();
+                      document.execCommand(btn.cmd);
+                      // Update store after formatting
+                      setTimeout(() => {
+                        if (editorRef.current) update('content', editorRef.current.innerHTML);
+                      }, 0);
+                    }}
                     style={{
                       width: 28, height: 28, border: 'none', background: 'transparent',
                       cursor: 'pointer', fontSize: 13, borderRadius: 4, color: '#e0e0e0', ...btn.style,
@@ -73,16 +109,18 @@ export function TextEditorContentEditor({ section }: { section: Section }) {
                 ))}
               </div>
               <div
+                ref={editorRef}
                 contentEditable
+                onInput={handleInput}
                 style={{
                   minHeight: 120, padding: '10px 12px',
                   border: '1px solid rgba(255,255,255,0.12)', borderTop: 'none',
                   borderRadius: '0 0 4px 4px',
                   background: 'rgba(255,255,255,0.05)', color: '#e0e0e0',
                   lineHeight: 1.6, outline: 'none', fontSize: 13,
+                  wordWrap: 'break-word', whiteSpace: 'pre-wrap',
                 }}
-                dangerouslySetInnerHTML={{ __html: c.content || '<p>Add your text here. Click to edit.</p>' }}
-                onBlur={(e) => update('content', e.currentTarget.innerHTML)}
+                suppressContentEditableWarning
               />
             </>
           )}
