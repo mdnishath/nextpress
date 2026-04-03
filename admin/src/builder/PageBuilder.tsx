@@ -235,12 +235,29 @@ export function PageBuilder({ pageSlug }: PageBuilderProps) {
         return;
       }
 
-      // ── Reorder within canvas ──
+      // ── Reorder sections (root or within any container) ──
       if (active.id !== over.id && overId !== 'canvas-droppable') {
-        const oldIdx = rootIds.indexOf(String(active.id));
-        const newIdx = rootIds.indexOf(overId);
-        if (oldIdx >= 0 && newIdx >= 0) {
-          moveSection(String(active.id), null, newIdx);
+        const allSections = useBuilderStore.getState().sections;
+        const activeSection = allSections.find((s) => s.id === String(active.id));
+        const overSection = allSections.find((s) => s.id === overId);
+
+        if (activeSection && overSection) {
+          // Get siblings of the target (sections sharing the same parent)
+          const targetParent = overSection.parent_id;
+          const siblings = allSections
+            .filter((s) => s.parent_id === targetParent)
+            .sort((a, b) => a.sort_order - b.sort_order);
+          const newIdx = siblings.findIndex((s) => s.id === overId);
+          if (newIdx >= 0) {
+            moveSection(String(active.id), targetParent, newIdx);
+          }
+        } else {
+          // Fallback: root-level reorder
+          const oldIdx = rootIds.indexOf(String(active.id));
+          const newIdx = rootIds.indexOf(overId);
+          if (oldIdx >= 0 && newIdx >= 0) {
+            moveSection(String(active.id), null, newIdx);
+          }
         }
       }
     },
