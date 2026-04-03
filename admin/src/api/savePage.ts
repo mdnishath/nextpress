@@ -84,9 +84,9 @@ export async function savePageChanges(
     const newSections = sections.filter((s) => isClientId(s.id));
     const existingSections = sections.filter((s) => !isClientId(s.id) && originalIds.has(s.id));
 
-    // 1. Delete removed sections (only backend IDs)
-    for (const id of deletedIds) {
-      await apiDelete(`/sections/${id}`).catch(() => {});
+    // 1. Delete removed sections in parallel
+    if (deletedIds.length > 0) {
+      await Promise.allSettled(deletedIds.map((id) => apiDelete(`/sections/${id}`)));
     }
 
     // 2. Create new sections level-by-level (parents before children)
@@ -145,41 +145,51 @@ export async function savePageChanges(
       remaining = remaining.filter((s) => !idMap.has(s.id) && canCreate.indexOf(s) === -1);
     }
 
-    // 3. Update existing sections that changed
+    // 3. Update existing sections that changed — all in parallel
+    const updatePromises: Promise<unknown>[] = [];
     for (const section of existingSections) {
       const original = originalSections.find((s) => s.id === section.id);
       if (!original) continue;
 
       if (JSON.stringify(section.content) !== JSON.stringify(original.content)) {
-        await apiPut(`/sections/${section.id}/content`, section.content as Record<string, unknown>);
+        updatePromises.push(apiPut(`/sections/${section.id}/content`, section.content as Record<string, unknown>));
       }
-
       if (JSON.stringify(section.style) !== JSON.stringify(original.style)) {
-        await apiPut(`/sections/${section.id}/style`, section.style as Record<string, unknown>);
+        updatePromises.push(apiPut(`/sections/${section.id}/style`, section.style as Record<string, unknown>));
       }
-
       if (section.variant_id !== original.variant_id) {
-        await apiPut(`/sections/${section.id}/variant`, { variant_id: section.variant_id });
+        updatePromises.push(apiPut(`/sections/${section.id}/variant`, { variant_id: section.variant_id }));
       }
-
       if (JSON.stringify(section.layout) !== JSON.stringify(original.layout)) {
-        await apiPut(`/sections/${section.id}/layout`, section.layout as Record<string, unknown>);
+        updatePromises.push(apiPut(`/sections/${section.id}/layout`, section.layout as Record<string, unknown>));
       }
-
       if (section.is_visible !== original.is_visible) {
-        await apiPut(`/sections/${section.id}/toggle`, {});
+        updatePromises.push(apiPut(`/sections/${section.id}/toggle`, {}));
       }
     }
+    if (updatePromises.length > 0) {
+      await Promise.allSettled(updatePromises);
+    }
 
-    // 4. Reorder root sections (use backend IDs)
-    const orderedIds = sections
-      .filter((s) => s.parent_id === null)
-      .sort((a, b) => a.sort_order - b.sort_order)
-      .map((s) => idMap.get(s.id) ?? s.id)
-      .filter((id) => !isClientId(id));
+    // 4. Reorder ALL sections by parent group (root + each container's children)
+    const allCurrent = sections.map((s) => ({
+      ...s,
+      id: idMap.get(s.id) ?? s.id, // map client IDs to backend IDs
+      parent_id: s.parent_id ? (idMap.get(s.parent_id) ?? s.parent_id) : null,
+    })).filter((s) => !isClientId(s.id));
 
-    if (orderedIds.length > 0) {
-      await apiPost(`/pages/${pageId}/sections/reorder`, { order: orderedIds.map(Number) }).catch(() => {});
+    // Group by parent and reorder each group
+    const parentGroups = new Map<string, string[]>();
+    for (const s of allCurrent) {
+      const key = s.parent_id ?? '__root__';
+      if (!parentGroups.has(key)) parentGroups.set(key, []);
+      parentGroups.get(key)!.push(s.id);
+    }
+
+    // Send reorder for root sections
+    const rootIds = parentGroups.get('__root__');
+    if (rootIds && rootIds.length > 0) {
+      await apiPost(`/pages/${pageId}/sections/reorder`, { ids: rootIds.map(Number) }).catch(() => {});
     }
 
     // 5. Update page meta

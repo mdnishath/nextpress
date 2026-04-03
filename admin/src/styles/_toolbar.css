@@ -83,3 +83,50 @@
   color: var(--npb-sidebar-text-muted);
 }
 
+/* ─── Save Indicator ─── */
+.npb-save-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+.npb-save-indicator--unsaved {
+  color: #f59e0b;
+  background: rgba(245, 158, 11, 0.1);
+}
+
+.npb-save-indicator--saving {
+  color: #60a5fa;
+  background: rgba(96, 165, 250, 0.1);
+}
+
+.npb-save-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #f59e0b;
+  animation: npb-dot-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes npb-dot-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.npb-save-spinner {
+  width: 12px;
+  height: 12px;
+  border: 2px solid rgba(96, 165, 250, 0.3);
+  border-top-color: #60a5fa;
+  border-radius: 50%;
+  animation: npb-spin 0.6s linear infinite;
+}
+
+@keyframes npb-spin {
+  to { transform: rotate(360deg); }
+}
+

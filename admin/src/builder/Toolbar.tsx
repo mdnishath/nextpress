@@ -122,9 +122,17 @@ export function Toolbar() {
         </button>
         <div className="npb-toolbar-divider" />
         <span style={{ fontWeight: 600, fontSize: 14 }}>{pageTitle || 'Untitled Page'}</span>
-        {isDirty && (
-          <span style={{ color: '#f59e0b', fontSize: 11, fontWeight: 500 }}>Unsaved</span>
-        )}
+        {isSaving ? (
+          <span className="npb-save-indicator npb-save-indicator--saving">
+            <span className="npb-save-spinner" />
+            Saving...
+          </span>
+        ) : isDirty ? (
+          <span className="npb-save-indicator npb-save-indicator--unsaved">
+            <span className="npb-save-dot" />
+            Unsaved
+          </span>
+        ) : null}
       </div>
 
       {/* Center: Undo/Redo + Responsive toggles */}
