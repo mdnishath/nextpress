@@ -1,7 +1,6 @@
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import {
-  GripVertical,
   Copy,
   Trash2,
   Eye,
@@ -95,6 +94,8 @@ export function SectionItem({ section }: SectionItemProps) {
         .filter(Boolean)
         .join(' ')}
       id={section.custom_id || undefined}
+      {...listeners}
+      {...attributes}
       onClick={(e) => {
         e.stopPropagation();
         selectSection(section.id);
@@ -108,25 +109,10 @@ export function SectionItem({ section }: SectionItemProps) {
       {/* Section label + controls (hidden in preview mode) */}
       {!previewMode && (
         <>
-          <div
-            className="npb-section-item__label"
-            {...listeners}
-            {...attributes}
-            style={{ cursor: 'grab' }}
-            title="Drag to move"
-          >
-            <GripVertical size={10} style={{ marginRight: 2, opacity: 0.6 }} />
+          <div className="npb-section-item__label">
             {sectionLabel}
           </div>
           <div className="npb-section-item__controls">
-            <button
-              className="npb-section-control-btn"
-              {...listeners}
-              {...attributes}
-              title="Drag to reorder"
-            >
-              <GripVertical size={14} />
-            </button>
             <button className="npb-section-control-btn" onClick={handleToggle} title={section.is_visible ? 'Hide' : 'Show'}>
               {section.is_visible ? <Eye size={14} /> : <EyeOff size={14} />}
             </button>
