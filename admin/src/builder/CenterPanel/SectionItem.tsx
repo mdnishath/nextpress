@@ -39,13 +39,17 @@ export function SectionItem({ section }: SectionItemProps) {
     transform,
     transition,
     isDragging,
+    isOver,
+    isSorting,
   } = useSortable({ id: section.id });
 
   // Only dnd-kit transform/transition/opacity — visual styles come from CSS class
   const style: React.CSSProperties = {
     transform: CSS.Transform.toString(transform),
     transition,
-    opacity: isDragging ? 0.5 : 1,
+    opacity: isDragging ? 0.3 : 1,
+    position: isDragging ? 'relative' as const : undefined,
+    zIndex: isDragging ? 50 : undefined,
   };
 
   const isSelected = selectedSectionId === section.id;
@@ -84,6 +88,8 @@ export function SectionItem({ section }: SectionItemProps) {
         isSelected && 'npb-section-item--selected',
         isHovered && 'npb-section-item--hovered',
         !section.is_visible && 'npb-section-item--hidden',
+        isDragging && 'npb-section-item--dragging',
+        isOver && !isDragging && 'npb-section-item--drop-target',
         extraClasses,
       ]
         .filter(Boolean)

@@ -26,6 +26,14 @@
   max-width: 375px;
 }
 
+/* Canvas active drop target */
+.npb-canvas--drop-active {
+  border: 2px dashed var(--npb-drop-indicator) !important;
+  border-radius: 12px;
+  background: rgba(59, 130, 246, 0.03);
+  transition: border-color 0.2s, background 0.2s;
+}
+
 /* ─── Section Item on Canvas ─── */
 /* All sections — flex column so content stretches to fill height */
 .npb-section-item {
@@ -55,6 +63,90 @@
 
 .npb-section-item--hidden {
   opacity: 0.4;
+}
+
+/* ─── Drag & Drop Visual States ─── */
+
+/* Section being dragged — fades out, dashed outline */
+.npb-section-item--dragging {
+  outline: 2px dashed var(--npb-primary) !important;
+  outline-offset: -2px;
+  background: rgba(124, 58, 237, 0.03);
+}
+
+/* Section that is a valid drop target — shows blue top-line indicator */
+.npb-section-item--drop-target {
+  position: relative;
+}
+.npb-section-item--drop-target::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--npb-drop-indicator);
+  border-radius: 2px;
+  z-index: 100;
+  box-shadow: 0 0 8px rgba(59, 130, 246, 0.5);
+  animation: npb-drop-pulse 1s ease-in-out infinite;
+}
+
+@keyframes npb-drop-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Container glow when something is dragged over it */
+.npb-container--drop-active {
+  outline: 2px dashed var(--npb-drop-indicator) !important;
+  outline-offset: -2px;
+  background: rgba(59, 130, 246, 0.04) !important;
+  box-shadow: inset 0 0 20px rgba(59, 130, 246, 0.08);
+  transition: all 0.15s ease;
+}
+
+/* Drag overlay — the floating badge that follows the cursor */
+.npb-drag-overlay {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  background: var(--npb-primary);
+  color: #fff;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--npb-font);
+  box-shadow: 0 8px 24px rgba(124, 58, 237, 0.4), 0 2px 6px rgba(0, 0, 0, 0.15);
+  pointer-events: none;
+  white-space: nowrap;
+  animation: npb-overlay-appear 0.15s ease-out;
+}
+
+.npb-drag-overlay__icon {
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+@keyframes npb-overlay-appear {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Global cursor change during drag */
+.npb-builder--dragging {
+  cursor: grabbing !important;
+}
+.npb-builder--dragging * {
+  cursor: grabbing !important;
+}
+
+/* Palette card while dragging */
+.npb-component-card--dragging {
+  opacity: 0.3;
+  outline: 2px dashed var(--npb-primary);
+  outline-offset: -2px;
 }
 
 /* Label tab — Elementor-style top-left tag */

@@ -112,11 +112,9 @@ export function ContainerItem({ section }: ContainerItemProps) {
   return (
     <div
       ref={setNodeRef}
-      className={`np-inner-${section.id} npb-container${children.length === 0 ? ' npb-container--empty' : ''}`}
+      className={`np-inner-${section.id} npb-container${children.length === 0 ? ' npb-container--empty' : ''}${isOver ? ' npb-container--drop-active' : ''}`}
       style={{
         minHeight: children.length > 0 ? undefined : 80,
-        outline: isOver ? '2px dashed var(--npb-drop-indicator)' : undefined,
-        transition: 'outline 0.15s',
       }}
     >
       <SectionStyleTag section={section} />

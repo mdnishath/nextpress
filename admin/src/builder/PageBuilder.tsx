@@ -8,6 +8,7 @@ import {
   useSensors,
   type DragStartEvent,
   type DragEndEvent,
+  type DragOverEvent,
 } from '@dnd-kit/core';
 import { Toolbar } from './Toolbar';
 import { LeftPanel } from './LeftPanel/LeftPanel';
@@ -105,14 +106,30 @@ export function PageBuilder({ pageSlug }: PageBuilderProps) {
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
   );
   const [dragActiveId, setDragActiveId] = useState<string | null>(null);
+  const [dragLabel, setDragLabel] = useState<string>('');
+  const [dropTargetId, setDropTargetId] = useState<string | null>(null);
 
   const handleDragStart = useCallback((event: DragStartEvent) => {
     setDragActiveId(String(event.active.id));
+    const data = event.active.data.current;
+    if (data?.type === 'palette-component') {
+      setDragLabel((data.component as Component)?.name || 'Component');
+    } else {
+      // Existing section being moved
+      const sec = useBuilderStore.getState().sections.find((s) => s.id === event.active.id);
+      setDragLabel(sec?.section_type?.replace(/_/g, ' ')?.replace(/\b\w/g, (c: string) => c.toUpperCase()) || 'Section');
+    }
+  }, []);
+
+  const handleDragOver = useCallback((event: DragOverEvent) => {
+    setDropTargetId(event.over ? String(event.over.id) : null);
   }, []);
 
   const handleDragEnd = useCallback(
     (event: DragEndEvent) => {
       setDragActiveId(null);
+      setDragLabel('');
+      setDropTargetId(null);
       const { active, over } = event;
       if (!over) return;
 
@@ -419,9 +436,10 @@ export function PageBuilder({ pageSlug }: PageBuilderProps) {
       sensors={dndSensors}
       collisionDetection={pointerWithin}
       onDragStart={handleDragStart}
+      onDragOver={handleDragOver}
       onDragEnd={handleDragEnd}
     >
-      <div className="npb-builder">
+      <div className={`npb-builder ${dragActiveId ? 'npb-builder--dragging' : ''}`}>
         <ErrorBoundary name="Toolbar">
           <Toolbar />
         </ErrorBoundary>
@@ -441,12 +459,9 @@ export function PageBuilder({ pageSlug }: PageBuilderProps) {
 
       <DragOverlay dropAnimation={null}>
         {dragActiveId ? (
-          <div style={{
-            padding: '8px 16px', background: '#7c3aed', color: '#fff',
-            borderRadius: 6, fontSize: 13, fontWeight: 500,
-            boxShadow: '0 4px 12px rgba(0,0,0,0.2)', pointerEvents: 'none',
-          }}>
-            Drop to add
+          <div className="npb-drag-overlay">
+            <div className="npb-drag-overlay__icon">⠿</div>
+            <span>{dragLabel}</span>
           </div>
         ) : null}
       </DragOverlay>

@@ -39,14 +39,8 @@ export function Canvas() {
     <div className="npb-canvas-wrapper">
       <div
         ref={setNodeRef}
-        className={canvasClass}
+        className={`${canvasClass} ${isOver ? 'npb-canvas--drop-active' : ''}`}
         onClick={handleCanvasClick}
-        style={{
-          border: isOver ? '2px dashed #3b82f6' : '2px dashed transparent',
-          borderRadius: 12,
-          background: isOver ? 'rgba(59, 130, 246, 0.02)' : undefined,
-          transition: 'border-color 0.2s, background 0.2s',
-        }}
       >
         {rootSections.length === 0 ? (
           <EmptyCanvas />
